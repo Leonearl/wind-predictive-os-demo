@@ -1,55 +1,65 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Wind Farm Predictive OS</title>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wind Farm Predictive OS</title>
 <style>
 :root{--g:#22c55e;--a:#f59e0b;--r:#ef4444;--bg:#0b1220;--card:#151f32;--text:#e2e8f0;--mut:#94a3b8;--blue:#3b82f6}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);padding:18px;line-height:1.4}
-h1{font-size:1.45rem} .cap{color:var(--mut);margin:4px 0 12px;font-size:.88rem}
-.metrics{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.m{background:var(--card);border-radius:10px;padding:10px 14px;min-width:90px;text-align:center}
-.m .n{font-size:1.35rem;font-weight:700} .m .l{font-size:.72rem;color:var(--mut)}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);padding:12px;line-height:1.4;font-size:15px}
+h1{font-size:1.35rem;margin-bottom:2px} .cap{color:var(--mut);margin:2px 0 12px;font-size:.85rem}
+.metrics{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.m{background:var(--card);border-radius:10px;padding:10px 12px;min-width:85px;flex:1 1 85px;text-align:center}
+.m .n{font-size:1.25rem;font-weight:700} .m .l{font-size:.7rem;color:var(--mut)}
 .nav{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.nav button{background:var(--card);border:1px solid #334155;color:var(--text);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:.85rem}
-.nav button:hover,.nav button.active{border-color:var(--blue);background:#1e3a5f}
-.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:7px;margin-bottom:16px}
-.t{background:var(--card);border-radius:9px;padding:10px 6px;text-align:center;cursor:pointer;border:3px solid transparent;transition:.15s}
+.nav button{background:var(--card);border:2px solid #334155;color:var(--text);padding:10px 14px;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;min-height:44px}
+.nav button:hover,.nav button.active{border-color:var(--blue);background:#1e3a5f;color:#fff}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:14px}
+.t{background:var(--card);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:3px solid transparent;transition:.15s;min-height:70px}
 .t:hover{transform:translateY(-2px)} .t.GREEN{border-color:var(--g)} .t.AMBER{border-color:var(--a)} .t.RED{border-color:var(--r)}
-.t .e{font-size:1.3rem} .t .name{font-weight:700;margin:2px 0;font-size:.9rem} .t .s{font-size:.68rem;color:var(--mut)}
-.detail{display:none;background:var(--card);border-radius:11px;padding:14px;margin-bottom:12px}
+.t .e{font-size:1.4rem} .t .name{font-weight:700;margin:3px 0;font-size:.95rem} .t .s{font-size:.7rem;color:var(--mut)}
+.detail{display:none;background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px}
 .detail.on{display:block}
-.rec{padding:9px 12px;border-radius:7px;margin:8px 0;border-left:4px solid}
+.rec{padding:10px 12px;border-radius:8px;margin:8px 0;border-left:4px solid;font-size:.9rem}
 .rec.GREEN{border-color:var(--g);background:#14532d33} .rec.AMBER{border-color:var(--a);background:#78350f33} .rec.RED{border-color:var(--r);background:#7f1d1d33}
-ul{list-style:none} li{padding:6px 9px;margin:3px 0;border-radius:6px;font-size:.87rem}
+ul{list-style:none} li{padding:8px 10px;margin:4px 0;border-radius:6px;font-size:.88rem}
 li.PASS{background:#14532d33} li.CONCERN{background:#78350f33} li.IMMEDIATE{background:#7f1d1d44}
-.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:7px}
-th,td{padding:6px 7px;border-bottom:1px solid #1e293b;text-align:left}
-th{color:var(--mut);font-weight:600} .badge{padding:2px 6px;border-radius:99px;font-size:.7rem;font-weight:600}
+.grid2{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:700px){.grid2{grid-template-columns:1.4fr 1fr}}
+table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:8px;overflow-x:auto;display:block}
+th,td{padding:7px 6px;border-bottom:1px solid #1e293b;text-align:left;white-space:nowrap}
+th{color:var(--mut);font-weight:600} 
+.badge{padding:3px 8px;border-radius:99px;font-size:.72rem;font-weight:600;display:inline-block}
 .badge.GREEN{background:#14532d;color:#86efac} .badge.AMBER{background:#78350f;color:#fcd34d} .badge.RED{background:#7f1d1d;color:#fca5a5}
 .badge.BF{background:#1e3a5f;color:#93c5fd} .badge.STOCK{background:#164e63;color:#a5f3fc}
 .section{display:none} .section.on{display:block}
 .cd{font-weight:700} .cd.ok{color:var(--g)} .cd.warn{color:var(--a)} .cd.crit{color:var(--r)}
-.sched-card{background:#0f1a2e;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #1e293b}
-.part{background:#0f1a2e;border-radius:7px;padding:7px 10px;margin:4px 0;font-size:.85rem;border-left:3px solid #3b82f6}
-.order{color:#93c5fd;font-size:.8rem}
-.btn-install{background:#1e3a5f;border:1px solid #3b82f6;color:#93c5fd;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:.8rem;margin-top:4px}
-.btn-install:hover{background:#2563eb;color:#fff}
-.toast{position:fixed;bottom:20px;right:20px;background:#14532d;color:#86efac;padding:12px 18px;border-radius:8px;display:none;z-index:99;box-shadow:0 4px 12px #0008}
-.bar-row{display:flex;align-items:center;gap:8px;margin:4px 0;cursor:default;position:relative}
-.bar{height:18px;border-radius:4px;min-width:4px}
-.tip{display:none;position:absolute;left:0;top:22px;background:#1e293b;border:1px solid #475569;padding:8px 11px;border-radius:7px;font-size:.8rem;z-index:10;width:260px;box-shadow:0 4px 12px #000a}
+.sched-card{background:#0f1a2e;border-radius:10px;padding:12px;margin-bottom:8px;border:1px solid #1e293b}
+.part{background:#0f1a2e;border-radius:8px;padding:8px 10px;margin:5px 0;font-size:.85rem;border-left:3px solid #3b82f6}
+.order{color:#93c5fd;font-size:.8rem;margin-top:2px}
+.btn{background:#1d4ed8;border:none;color:#fff;padding:11px 16px;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;min-height:44px;margin:4px 4px 4px 0;display:inline-block}
+.btn:hover{background:#2563eb} .btn:disabled{opacity:.55;cursor:default}
+.btn-green{background:#15803d} .btn-green:hover{background:#16a34a}
+.btn-amber{background:#b45309} .btn-amber:hover{background:#d97706}
+.toast{position:fixed;bottom:16px;left:12px;right:12px;max-width:420px;margin:auto;background:#14532d;color:#86efac;padding:14px 16px;border-radius:10px;display:none;z-index:99;box-shadow:0 6px 20px #0009;font-size:.9rem}
+.bar-row{display:flex;align-items:center;gap:8px;margin:5px 0;position:relative;flex-wrap:wrap}
+.bar{height:20px;border-radius:4px;min-width:4px}
+.tip{display:none;position:absolute;left:0;top:24px;background:#1e293b;border:1px solid #475569;padding:9px 12px;border-radius:8px;font-size:.82rem;z-index:10;width:min(280px,90vw);box-shadow:0 4px 14px #000a}
 .bar-row:hover .tip{display:block}
+.group-box{background:#1e3a5f44;border:1px solid #3b82f6;border-radius:10px;padding:12px;margin:10px 0}
+.wo-box{background:#0f1a2e;border:1px solid #334155;border-radius:10px;padding:14px;margin-top:10px;font-size:.88rem;display:none}
+.wo-box.show{display:block}
 </style></head><body>
 <h1>🌪️ Wind Farm Predictive Operations System</h1>
-<p class="cap">Demo • SCADA + Predictive Maintenance + Spares + Vessel Windows • Environmental Science graduate project</p>
+<p class="cap">Demo • SCADA + Predictive Maintenance + Spares + Vessel Windows + Financial Risk • Environmental Science graduate project</p>
 
 <div class="nav">
 <button class="active" onclick="show('board',this)">Status Board</button>
-<button onclick="show('schedule',this)">📅 Maintenance Schedule</button>
-<button onclick="show('spares',this)">📦 Spares & Parts</button>
+<button onclick="show('schedule',this)">📅 Maintenance</button>
+<button onclick="show('spares',this)">📦 Spares</button>
 <button onclick="show('detail',this)">Turbine Detail</button>
-<button onclick="show('forecast',this)">Performance Forecast</button>
-<button onclick="show('alerts',this)">Alert Centre</button>
+<button onclick="show('forecast',this)">Forecast</button>
+<button onclick="show('alerts',this)">Alerts</button>
 </div>
 
 <div id="board" class="section on">
@@ -58,379 +68,512 @@ th{color:var(--mut);font-weight:600} .badge{padding:2px 6px;border-radius:99px;f
 <div class="m"><div class="n" style="color:var(--g)">20</div><div class="l">🟢 Green</div></div>
 <div class="m"><div class="n" style="color:var(--a)">3</div><div class="l">🟠 Amber</div></div>
 <div class="m"><div class="n" style="color:var(--r)">1</div><div class="l">🔴 Red</div></div>
-<div class="m"><div class="n">769</div><div class="l">7d Risk MWh</div></div>
+<div class="m"><div class="n">778</div><div class="l">7d Risk MWh</div></div>
+<div class="m"><div class="n">£58,350</div><div class="l">Revenue at risk</div></div>
+<div class="m"><div class="n">311.2</div><div class="l">tCO₂ at risk</div></div>
 </div>
-<h3 style="margin-bottom:8px">Turbine Status Board — click any turbine</h3>
+<h3 style="margin-bottom:8px">Turbine Status Board — tap any turbine</h3>
 <div class="board">
-<div class="t AMBER" onclick="openT('T-01')"><div class="e">🟠</div><div class="name">T-01</div><div class="s">AMBER · RUL 39d</div></div><div class="t GREEN" onclick="openT('T-02')"><div class="e">🟢</div><div class="name">T-02</div><div class="s">GREEN · RUL 537d</div></div><div class="t GREEN" onclick="openT('T-03')"><div class="e">🟢</div><div class="name">T-03</div><div class="s">GREEN · RUL 449d</div></div><div class="t GREEN" onclick="openT('T-04')"><div class="e">🟢</div><div class="name">T-04</div><div class="s">GREEN · RUL 552d</div></div><div class="t AMBER" onclick="openT('T-05')"><div class="e">🟠</div><div class="name">T-05</div><div class="s">AMBER · RUL 33d</div></div><div class="t GREEN" onclick="openT('T-06')"><div class="e">🟢</div><div class="name">T-06</div><div class="s">GREEN · RUL 249d</div></div><div class="t GREEN" onclick="openT('T-07')"><div class="e">🟢</div><div class="name">T-07</div><div class="s">GREEN · RUL 325d</div></div><div class="t GREEN" onclick="openT('T-08')"><div class="e">🟢</div><div class="name">T-08</div><div class="s">GREEN · RUL 527d</div></div><div class="t GREEN" onclick="openT('T-09')"><div class="e">🟢</div><div class="name">T-09</div><div class="s">GREEN · RUL 381d</div></div><div class="t RED" onclick="openT('T-10')"><div class="e">🔴</div><div class="name">T-10</div><div class="s">RED · RUL 5d</div></div><div class="t GREEN" onclick="openT('T-11')"><div class="e">🟢</div><div class="name">T-11</div><div class="s">GREEN · RUL 320d</div></div><div class="t GREEN" onclick="openT('T-12')"><div class="e">🟢</div><div class="name">T-12</div><div class="s">GREEN · RUL 225d</div></div><div class="t GREEN" onclick="openT('T-13')"><div class="e">🟢</div><div class="name">T-13</div><div class="s">GREEN · RUL 398d</div></div><div class="t GREEN" onclick="openT('T-14')"><div class="e">🟢</div><div class="name">T-14</div><div class="s">GREEN · RUL 471d</div></div><div class="t GREEN" onclick="openT('T-15')"><div class="e">🟢</div><div class="name">T-15</div><div class="s">GREEN · RUL 404d</div></div><div class="t GREEN" onclick="openT('T-16')"><div class="e">🟢</div><div class="name">T-16</div><div class="s">GREEN · RUL 377d</div></div><div class="t GREEN" onclick="openT('T-17')"><div class="e">🟢</div><div class="name">T-17</div><div class="s">GREEN · RUL 313d</div></div><div class="t GREEN" onclick="openT('T-18')"><div class="e">🟢</div><div class="name">T-18</div><div class="s">GREEN · RUL 432d</div></div><div class="t GREEN" onclick="openT('T-19')"><div class="e">🟢</div><div class="name">T-19</div><div class="s">GREEN · RUL 447d</div></div><div class="t GREEN" onclick="openT('T-20')"><div class="e">🟢</div><div class="name">T-20</div><div class="s">GREEN · RUL 316d</div></div><div class="t GREEN" onclick="openT('T-21')"><div class="e">🟢</div><div class="name">T-21</div><div class="s">GREEN · RUL 380d</div></div><div class="t AMBER" onclick="openT('T-22')"><div class="e">🟠</div><div class="name">T-22</div><div class="s">AMBER · RUL 45d</div></div><div class="t GREEN" onclick="openT('T-23')"><div class="e">🟢</div><div class="name">T-23</div><div class="s">GREEN · RUL 517d</div></div><div class="t GREEN" onclick="openT('T-24')"><div class="e">🟢</div><div class="name">T-24</div><div class="s">GREEN · RUL 344d</div></div></div>
-<table><thead><tr><th>Turbine</th><th>Site</th><th>Status</th><th>RUL</th><th>Risk MWh</th><th>Vessel Window</th></tr></thead><tbody>
-<tr><td><b>T-01</b></td><td>Hornsea 2</td><td><span class="badge AMBER">AMBER</span></td><td>39d</td><td>93</td><td>30 Jul – 01 Aug</td></tr><tr><td><b>T-02</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>537d</td><td>7</td><td>31 Jul – 02 Aug</td></tr><tr><td><b>T-03</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>449d</td><td>9</td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-04</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>552d</td><td>3</td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-05</b></td><td>Hornsea 1</td><td><span class="badge AMBER">AMBER</span></td><td>33d</td><td>84</td><td>05 Aug – 07 Aug</td></tr><tr><td><b>T-06</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>249d</td><td>0</td><td>09 Aug – 11 Aug</td></tr><tr><td><b>T-07</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>325d</td><td>8</td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-08</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>527d</td><td>12</td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-09</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>381d</td><td>13</td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-10</b></td><td>Hornsea 1</td><td><span class="badge RED">RED</span></td><td>5d</td><td>328</td><td>ASAP / next weather window (01 Aug)</td></tr><tr><td><b>T-11</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>320d</td><td>12</td><td>30 Jul – 01 Aug</td></tr><tr><td><b>T-12</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>225d</td><td>16</td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-13</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>398d</td><td>16</td><td>07 Aug – 09 Aug</td></tr><tr><td><b>T-14</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>471d</td><td>17</td><td>31 Jul – 02 Aug</td></tr><tr><td><b>T-15</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>404d</td><td>2</td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-16</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>377d</td><td>16</td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-17</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>313d</td><td>9</td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-18</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>432d</td><td>1</td><td>12 Aug – 14 Aug</td></tr><tr><td><b>T-19</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>447d</td><td>17</td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-20</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>316d</td><td>17</td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-21</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>380d</td><td>13</td><td>03 Aug – 05 Aug</td></tr><tr><td><b>T-22</b></td><td>Hornsea 3</td><td><span class="badge AMBER">AMBER</span></td><td>45d</td><td>58</td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-23</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>517d</td><td>2</td><td>30 Jul – 01 Aug</td></tr><tr><td><b>T-24</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>344d</td><td>16</td><td>01 Aug – 03 Aug</td></tr></tbody></table></div><div id="schedule" class="section">
-<h2>📅 Maintenance Schedule & Running Hours</h2>
-<table><thead><tr><th>Turbine</th><th>Site</th><th>Status</th><th>Hours since Oil</th><th>Oil Countdown</th><th>Hours since Filter</th><th>Filter Countdown</th><th>Vessel Window</th><th>Action</th></tr></thead><tbody>
-<tr><td><b>T-01</b></td><td>Hornsea 2</td><td><span class="badge AMBER">AMBER</span></td><td>2,419 h</td><td><span class="cd ok">264d</span></td><td>3,744 h</td><td><span class="cd warn">26d</span></td><td>30 Jul – 01 Aug</td><td><span class="badge BF">Bring forward</span></td></tr><tr><td><b>T-02</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>2,885 h</td><td><span class="cd ok">244d</span></td><td>3,004 h</td><td><span class="cd warn">57d</span></td><td>31 Jul – 02 Aug</td><td>On plan</td></tr><tr><td><b>T-03</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>6,450 h</td><td><span class="cd ok">96d</span></td><td>1,707 h</td><td><span class="cd ok">111d</span></td><td>01 Aug – 03 Aug</td><td>On plan</td></tr><tr><td><b>T-04</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>5,605 h</td><td><span class="cd ok">131d</span></td><td>2,644 h</td><td><span class="cd ok">72d</span></td><td>10 Aug – 12 Aug</td><td>On plan</td></tr><tr><td><b>T-05</b></td><td>Hornsea 1</td><td><span class="badge AMBER">AMBER</span></td><td>4,920 h</td><td><span class="cd ok">160d</span></td><td>1,166 h</td><td><span class="cd ok">133d</span></td><td>05 Aug – 07 Aug</td><td><span class="badge BF">Bring forward</span></td></tr><tr><td><b>T-06</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>5,942 h</td><td><span class="cd ok">117d</span></td><td>2,554 h</td><td><span class="cd ok">76d</span></td><td>09 Aug – 11 Aug</td><td>On plan</td></tr><tr><td><b>T-07</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>5,241 h</td><td><span class="cd ok">146d</span></td><td>3,247 h</td><td><span class="cd warn">47d</span></td><td>10 Aug – 12 Aug</td><td>On plan</td></tr><tr><td><b>T-08</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>7,429 h</td><td><span class="cd warn">55d</span></td><td>2,322 h</td><td><span class="cd ok">85d</span></td><td>10 Aug – 12 Aug</td><td>On plan</td></tr><tr><td><b>T-09</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>3,293 h</td><td><span class="cd ok">227d</span></td><td>1,473 h</td><td><span class="cd ok">121d</span></td><td>01 Aug – 03 Aug</td><td>On plan</td></tr><tr><td><b>T-10</b></td><td>Hornsea 1</td><td><span class="badge RED">RED</span></td><td>7,301 h</td><td><span class="cd warn">60d</span></td><td>3,627 h</td><td><span class="cd warn">31d</span></td><td>ASAP / next weather window (01 Aug)</td><td><span class="badge BF">Bring forward</span></td></tr><tr><td><b>T-11</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>2,572 h</td><td><span class="cd ok">257d</span></td><td>3,167 h</td><td><span class="cd warn">50d</span></td><td>30 Jul – 01 Aug</td><td>On plan</td></tr><tr><td><b>T-12</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>2,008 h</td><td><span class="cd ok">281d</span></td><td>2,172 h</td><td><span class="cd ok">92d</span></td><td>10 Aug – 12 Aug</td><td>On plan</td></tr><tr><td><b>T-13</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>5,757 h</td><td><span class="cd ok">125d</span></td><td>1,729 h</td><td><span class="cd ok">110d</span></td><td>07 Aug – 09 Aug</td><td>On plan</td></tr><tr><td><b>T-14</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>3,675 h</td><td><span class="cd ok">211d</span></td><td>2,212 h</td><td><span class="cd ok">90d</span></td><td>31 Jul – 02 Aug</td><td>On plan</td></tr><tr><td><b>T-15</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>2,500 h</td><td><span class="cd ok">260d</span></td><td>1,411 h</td><td><span class="cd ok">123d</span></td><td>01 Aug – 03 Aug</td><td>On plan</td></tr><tr><td><b>T-16</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>1,438 h</td><td><span class="cd ok">305d</span></td><td>2,750 h</td><td><span class="cd ok">67d</span></td><td>01 Aug – 03 Aug</td><td>On plan</td></tr><tr><td><b>T-17</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>2,166 h</td><td><span class="cd ok">274d</span></td><td>1,814 h</td><td><span class="cd ok">106d</span></td><td>04 Aug – 06 Aug</td><td>On plan</td></tr><tr><td><b>T-18</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>4,411 h</td><td><span class="cd ok">181d</span></td><td>3,708 h</td><td><span class="cd warn">28d</span></td><td>12 Aug – 14 Aug</td><td>On plan</td></tr><tr><td><b>T-19</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>3,194 h</td><td><span class="cd ok">231d</span></td><td>2,410 h</td><td><span class="cd ok">82d</span></td><td>10 Aug – 12 Aug</td><td>On plan</td></tr><tr><td><b>T-20</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>6,246 h</td><td><span class="cd ok">104d</span></td><td>1,096 h</td><td><span class="cd ok">136d</span></td><td>10 Aug – 12 Aug</td><td>On plan</td></tr><tr><td><b>T-21</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>2,137 h</td><td><span class="cd ok">275d</span></td><td>3,700 h</td><td><span class="cd warn">28d</span></td><td>03 Aug – 05 Aug</td><td>On plan</td></tr><tr><td><b>T-22</b></td><td>Hornsea 3</td><td><span class="badge AMBER">AMBER</span></td><td>7,358 h</td><td><span class="cd warn">58d</span></td><td>1,596 h</td><td><span class="cd ok">116d</span></td><td>01 Aug – 03 Aug</td><td><span class="badge BF">Bring forward</span></td></tr><tr><td><b>T-23</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>4,467 h</td><td><span class="cd ok">178d</span></td><td>3,264 h</td><td><span class="cd warn">46d</span></td><td>30 Jul – 01 Aug</td><td>On plan</td></tr><tr><td><b>T-24</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>8,014 h</td><td><span class="cd warn">31d</span></td><td>714 h</td><td><span class="cd ok">152d</span></td><td>01 Aug – 03 Aug</td><td>On plan</td></tr></tbody></table></div><div id="spares" class="section">
-<h2>📦 Spares, Parts Required & Auto-Reorder</h2>
-<p class="cap">Click “Mark Installed → Reorder” to simulate taking a part from stock and triggering a replacement order to the site</p>
-<div class="sched-card" id="card-T-01"><b>T-01</b> <span class="badge AMBER">AMBER</span> · Hornsea 2 · Window: 30 Jul – 01 Aug<br><div class="part" id="part-T-01-oil_filter">
-        <b>Gearbox Oil Filter</b> · PN: <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×9</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GF-8842-A back to <b>Hornsea 2</b></div>
-        <button class="btn-install" onclick="installPart('T-01','oil_filter','Gearbox Oil Filter','GF-8842-A','Hornsea 2')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-01-gear_oil">
-        <b>Gearbox Oil (200L)</b> · PN: <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×15</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GO-200L-VG320 back to <b>Hornsea 2</b></div>
-        <button class="btn-install" onclick="installPart('T-01','gear_oil','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 2')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-01-hydraulic_filter">
-        <b>Hydraulic Filter</b> · PN: <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×7</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× HF-2201-B back to <b>Hornsea 2</b></div>
-        <button class="btn-install" onclick="installPart('T-01','hydraulic_filter','Hydraulic Filter','HF-2201-B','Hornsea 2')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-01-bearing_kit">
-        <b>Main Bearing Grease Kit</b> · PN: <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×5</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× MB-GK-55 back to <b>Hornsea 2</b></div>
-        <button class="btn-install" onclick="installPart('T-01','bearing_kit','Main Bearing Grease Kit','MB-GK-55','Hornsea 2')">Mark Installed → Reorder</button>
-        </div></div><div class="sched-card" id="card-T-05"><b>T-05</b> <span class="badge AMBER">AMBER</span> · Hornsea 1 · Window: 05 Aug – 07 Aug<br><div class="part" id="part-T-05-oil_filter">
-        <b>Gearbox Oil Filter</b> · PN: <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×14</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GF-8842-A back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-05','oil_filter','Gearbox Oil Filter','GF-8842-A','Hornsea 1')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-05-gear_oil">
-        <b>Gearbox Oil (200L)</b> · PN: <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×22</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GO-200L-VG320 back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-05','gear_oil','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 1')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-05-hydraulic_filter">
-        <b>Hydraulic Filter</b> · PN: <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×11</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× HF-2201-B back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-05','hydraulic_filter','Hydraulic Filter','HF-2201-B','Hornsea 1')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-05-bearing_kit">
-        <b>Main Bearing Grease Kit</b> · PN: <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×8</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× MB-GK-55 back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-05','bearing_kit','Main Bearing Grease Kit','MB-GK-55','Hornsea 1')">Mark Installed → Reorder</button>
-        </div></div><div class="sched-card" id="card-T-10"><b>T-10</b> <span class="badge RED">RED</span> · Hornsea 1 · Window: ASAP / next weather window (01 Aug)<br><div class="part" id="part-T-10-oil_filter">
-        <b>Gearbox Oil Filter</b> · PN: <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×14</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GF-8842-A back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-10','oil_filter','Gearbox Oil Filter','GF-8842-A','Hornsea 1')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-10-gear_oil">
-        <b>Gearbox Oil (200L)</b> · PN: <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×22</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GO-200L-VG320 back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-10','gear_oil','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 1')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-10-hydraulic_filter">
-        <b>Hydraulic Filter</b> · PN: <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×11</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× HF-2201-B back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-10','hydraulic_filter','Hydraulic Filter','HF-2201-B','Hornsea 1')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-10-bearing_kit">
-        <b>Main Bearing Grease Kit</b> · PN: <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×8</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× MB-GK-55 back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-10','bearing_kit','Main Bearing Grease Kit','MB-GK-55','Hornsea 1')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-10-pitch_filter">
-        <b>Pitch System Filter</b> · PN: <code>PF-1190</code> · <span class="badge STOCK">In stock ×16</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× PF-1190 back to <b>Hornsea 1</b></div>
-        <button class="btn-install" onclick="installPart('T-10','pitch_filter','Pitch System Filter','PF-1190','Hornsea 1')">Mark Installed → Reorder</button>
-        </div></div><div class="sched-card" id="card-T-22"><b>T-22</b> <span class="badge AMBER">AMBER</span> · Hornsea 3 · Window: 01 Aug – 03 Aug<br><div class="part" id="part-T-22-oil_filter">
-        <b>Gearbox Oil Filter</b> · PN: <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×6</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GF-8842-A back to <b>Hornsea 3</b></div>
-        <button class="btn-install" onclick="installPart('T-22','oil_filter','Gearbox Oil Filter','GF-8842-A','Hornsea 3')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-22-gear_oil">
-        <b>Gearbox Oil (200L)</b> · PN: <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×8</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× GO-200L-VG320 back to <b>Hornsea 3</b></div>
-        <button class="btn-install" onclick="installPart('T-22','gear_oil','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 3')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-22-hydraulic_filter">
-        <b>Hydraulic Filter</b> · PN: <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×5</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× HF-2201-B back to <b>Hornsea 3</b></div>
-        <button class="btn-install" onclick="installPart('T-22','hydraulic_filter','Hydraulic Filter','HF-2201-B','Hornsea 3')">Mark Installed → Reorder</button>
-        </div><div class="part" id="part-T-22-bearing_kit">
-        <b>Main Bearing Grease Kit</b> · PN: <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×3</span>
-        <div class="order">→ When installed: auto-create PO to replenish 1× MB-GK-55 back to <b>Hornsea 3</b></div>
-        <button class="btn-install" onclick="installPart('T-22','bearing_kit','Main Bearing Grease Kit','MB-GK-55','Hornsea 3')">Mark Installed → Reorder</button>
-        </div></div><h3 style="margin:16px 0 8px">Site Stock Overview</h3>
-<table><thead><tr><th>Part</th><th>PN</th><th>Hornsea 1</th><th>Hornsea 2</th><th>Hornsea 3</th><th>West of Duddon Sands</th><th>Race Bank</th></tr></thead><tbody><tr><td>Gearbox Oil Filter</td><td><code>GF-8842-A</code></td><td class="cd ok">14</td><td class="cd ok">9</td><td class="cd ok">6</td><td class="cd warn">4</td><td class="cd warn">3</td></tr><tr><td>Hydraulic Filter</td><td><code>HF-2201-B</code></td><td class="cd ok">11</td><td class="cd ok">7</td><td class="cd ok">5</td><td class="cd warn">3</td><td class="cd warn">2</td></tr><tr><td>Gearbox Oil (200L)</td><td><code>GO-200L-VG320</code></td><td class="cd ok">22</td><td class="cd ok">15</td><td class="cd ok">8</td><td class="cd ok">5</td><td class="cd warn">4</td></tr><tr><td>Main Bearing Grease Kit</td><td><code>MB-GK-55</code></td><td class="cd ok">8</td><td class="cd ok">5</td><td class="cd warn">3</td><td class="cd warn">2</td><td class="cd crit">1</td></tr><tr><td>Pitch System Filter</td><td><code>PF-1190</code></td><td class="cd ok">16</td><td class="cd ok">10</td><td class="cd ok">7</td><td class="cd warn">4</td><td class="cd warn">3</td></tr></tbody></table></div><div id="detail" class="section"><div class="detail" id="d-T-01"><h2>T-01 — AMBER · Hornsea 2</h2>
-    <div class="rec AMBER">Inspect within 48–72 h. RUL 39 days.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="CONCERN"><b>Vibration (RMS)</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Main Bearing Temp</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Oil Particle Count</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Pitch Variance</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Gearbox Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×9</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×15</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×7</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×5</div></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>39 days</b> · Risk: <b>93 MWh</b></p>
+<div class="t AMBER" onclick="openT('T-01')"><div class="e">🟠</div><div class="name">T-01</div><div class="s">AMBER · RUL 39d</div></div><div class="t GREEN" onclick="openT('T-02')"><div class="e">🟢</div><div class="name">T-02</div><div class="s">GREEN · RUL 230d</div></div><div class="t GREEN" onclick="openT('T-03')"><div class="e">🟢</div><div class="name">T-03</div><div class="s">GREEN · RUL 495d</div></div><div class="t GREEN" onclick="openT('T-04')"><div class="e">🟢</div><div class="name">T-04</div><div class="s">GREEN · RUL 492d</div></div><div class="t AMBER" onclick="openT('T-05')"><div class="e">🟠</div><div class="name">T-05</div><div class="s">AMBER · RUL 53d</div></div><div class="t GREEN" onclick="openT('T-06')"><div class="e">🟢</div><div class="name">T-06</div><div class="s">GREEN · RUL 320d</div></div><div class="t GREEN" onclick="openT('T-07')"><div class="e">🟢</div><div class="name">T-07</div><div class="s">GREEN · RUL 237d</div></div><div class="t GREEN" onclick="openT('T-08')"><div class="e">🟢</div><div class="name">T-08</div><div class="s">GREEN · RUL 445d</div></div><div class="t GREEN" onclick="openT('T-09')"><div class="e">🟢</div><div class="name">T-09</div><div class="s">GREEN · RUL 255d</div></div><div class="t RED" onclick="openT('T-10')"><div class="e">🔴</div><div class="name">T-10</div><div class="s">RED · RUL 7d</div></div><div class="t GREEN" onclick="openT('T-11')"><div class="e">🟢</div><div class="name">T-11</div><div class="s">GREEN · RUL 486d</div></div><div class="t GREEN" onclick="openT('T-12')"><div class="e">🟢</div><div class="name">T-12</div><div class="s">GREEN · RUL 264d</div></div><div class="t GREEN" onclick="openT('T-13')"><div class="e">🟢</div><div class="name">T-13</div><div class="s">GREEN · RUL 269d</div></div><div class="t GREEN" onclick="openT('T-14')"><div class="e">🟢</div><div class="name">T-14</div><div class="s">GREEN · RUL 269d</div></div><div class="t GREEN" onclick="openT('T-15')"><div class="e">🟢</div><div class="name">T-15</div><div class="s">GREEN · RUL 573d</div></div><div class="t GREEN" onclick="openT('T-16')"><div class="e">🟢</div><div class="name">T-16</div><div class="s">GREEN · RUL 341d</div></div><div class="t GREEN" onclick="openT('T-17')"><div class="e">🟢</div><div class="name">T-17</div><div class="s">GREEN · RUL 236d</div></div><div class="t GREEN" onclick="openT('T-18')"><div class="e">🟢</div><div class="name">T-18</div><div class="s">GREEN · RUL 380d</div></div><div class="t GREEN" onclick="openT('T-19')"><div class="e">🟢</div><div class="name">T-19</div><div class="s">GREEN · RUL 346d</div></div><div class="t GREEN" onclick="openT('T-20')"><div class="e">🟢</div><div class="name">T-20</div><div class="s">GREEN · RUL 372d</div></div><div class="t GREEN" onclick="openT('T-21')"><div class="e">🟢</div><div class="name">T-21</div><div class="s">GREEN · RUL 414d</div></div><div class="t AMBER" onclick="openT('T-22')"><div class="e">🟠</div><div class="name">T-22</div><div class="s">AMBER · RUL 39d</div></div><div class="t GREEN" onclick="openT('T-23')"><div class="e">🟢</div><div class="name">T-23</div><div class="s">GREEN · RUL 513d</div></div><div class="t GREEN" onclick="openT('T-24')"><div class="e">🟢</div><div class="name">T-24</div><div class="s">GREEN · RUL 454d</div></div></div>
+<div style="overflow-x:auto"><table><thead><tr><th>Turbine</th><th>Site</th><th>Status</th><th>RUL</th><th>Risk MWh</th><th>£ Risk</th><th>tCO₂</th><th>Vessel Window</th></tr></thead><tbody>
+<tr><td><b>T-01</b></td><td>Hornsea 2</td><td><span class="badge AMBER">AMBER</span></td><td>39d</td><td>93</td><td>£6,975</td><td>37.2</td><td>02 Aug – 04 Aug</td></tr><tr><td><b>T-02</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>230d</td><td>9</td><td>£675</td><td>3.6</td><td>06 Aug – 08 Aug</td></tr><tr><td><b>T-03</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>495d</td><td>1</td><td>£75</td><td>0.4</td><td>31 Jul – 02 Aug</td></tr><tr><td><b>T-04</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>492d</td><td>12</td><td>£900</td><td>4.8</td><td>11 Aug – 13 Aug</td></tr><tr><td><b>T-05</b></td><td>Hornsea 1</td><td><span class="badge AMBER">AMBER</span></td><td>53d</td><td>105</td><td>£7,875</td><td>42.0</td><td>07 Aug – 09 Aug</td></tr><tr><td><b>T-06</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>320d</td><td>9</td><td>£675</td><td>3.6</td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-07</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>237d</td><td>5</td><td>£375</td><td>2.0</td><td>11 Aug – 13 Aug</td></tr><tr><td><b>T-08</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>445d</td><td>11</td><td>£825</td><td>4.4</td><td>03 Aug – 05 Aug</td></tr><tr><td><b>T-09</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>255d</td><td>13</td><td>£975</td><td>5.2</td><td>07 Aug – 09 Aug</td></tr><tr><td><b>T-10</b></td><td>Hornsea 1</td><td><span class="badge RED">RED</span></td><td>7d</td><td>289</td><td>£21,675</td><td>115.6</td><td>ASAP / next weather window (30 Jul)</td></tr><tr><td><b>T-11</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>486d</td><td>8</td><td>£600</td><td>3.2</td><td>02 Aug – 04 Aug</td></tr><tr><td><b>T-12</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>264d</td><td>9</td><td>£675</td><td>3.6</td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-13</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>269d</td><td>14</td><td>£1,050</td><td>5.6</td><td>09 Aug – 11 Aug</td></tr><tr><td><b>T-14</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>269d</td><td>10</td><td>£750</td><td>4.0</td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-15</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>573d</td><td>8</td><td>£600</td><td>3.2</td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-16</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>341d</td><td>5</td><td>£375</td><td>2.0</td><td>09 Aug – 11 Aug</td></tr><tr><td><b>T-17</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>236d</td><td>14</td><td>£1,050</td><td>5.6</td><td>06 Aug – 08 Aug</td></tr><tr><td><b>T-18</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>380d</td><td>3</td><td>£225</td><td>1.2</td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-19</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>346d</td><td>7</td><td>£525</td><td>2.8</td><td>07 Aug – 09 Aug</td></tr><tr><td><b>T-20</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>372d</td><td>12</td><td>£900</td><td>4.8</td><td>31 Jul – 02 Aug</td></tr><tr><td><b>T-21</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>414d</td><td>15</td><td>£1,125</td><td>6.0</td><td>09 Aug – 11 Aug</td></tr><tr><td><b>T-22</b></td><td>Hornsea 3</td><td><span class="badge AMBER">AMBER</span></td><td>39d</td><td>96</td><td>£7,200</td><td>38.4</td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-23</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>513d</td><td>14</td><td>£1,050</td><td>5.6</td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-24</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>454d</td><td>16</td><td>£1,200</td><td>6.4</td><td>03 Aug – 05 Aug</td></tr></tbody></table></div></div><div id="schedule" class="section">
+<h2>📅 Maintenance Schedule & Vessel Grouping</h2>
+<p class="cap">Running hours • Countdowns • Suggested vessel trip grouping to reduce charter cost</p>
+<div class="group-box">
+        <b>🚢 Suggested vessel trip – Hornsea 2</b><br>
+        Turbines: T-01<br>
+        <small>Group these into one technician shift / vessel day to minimise charter cost</small>
+        <br><button class="btn btn-amber" onclick="genWO('Hornsea 2','T-01')">Generate Combined Work Order</button>
+        </div><div class="group-box">
+        <b>🚢 Suggested vessel trip – Hornsea 1</b><br>
+        Turbines: T-05, T-10<br>
+        <small>Group these into one technician shift / vessel day to minimise charter cost</small>
+        <br><button class="btn btn-amber" onclick="genWO('Hornsea 1','T-05,T-10')">Generate Combined Work Order</button>
+        </div><div class="group-box">
+        <b>🚢 Suggested vessel trip – Hornsea 3</b><br>
+        Turbines: T-22<br>
+        <small>Group these into one technician shift / vessel day to minimise charter cost</small>
+        <br><button class="btn btn-amber" onclick="genWO('Hornsea 3','T-22')">Generate Combined Work Order</button>
+        </div><div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Turbine</th><th>Site</th><th>Status</th><th>Hours Oil</th><th>Oil Countdown</th><th>Hours Filter</th><th>Filter Countdown</th><th>Vessel Window</th></tr></thead><tbody>
+<tr><td><b>T-01</b></td><td>Hornsea 2</td><td><span class="badge AMBER">AMBER</span></td><td>2,419h</td><td><span class="cd ok">264d</span></td><td>3,744h</td><td><span class="cd warn">26d</span></td><td>02 Aug – 04 Aug</td></tr><tr><td><b>T-02</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>6,471h</td><td><span class="cd ok">95d</span></td><td>692h</td><td><span class="cd ok">153d</span></td><td>06 Aug – 08 Aug</td></tr><tr><td><b>T-03</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>3,065h</td><td><span class="cd ok">237d</span></td><td>1,589h</td><td><span class="cd ok">116d</span></td><td>31 Jul – 02 Aug</td></tr><tr><td><b>T-04</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>2,044h</td><td><span class="cd ok">279d</span></td><td>2,459h</td><td><span class="cd ok">80d</span></td><td>11 Aug – 13 Aug</td></tr><tr><td><b>T-05</b></td><td>Hornsea 1</td><td><span class="badge AMBER">AMBER</span></td><td>5,756h</td><td><span class="cd ok">125d</span></td><td>3,495h</td><td><span class="cd warn">36d</span></td><td>07 Aug – 09 Aug</td></tr><tr><td><b>T-06</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>3,438h</td><td><span class="cd ok">221d</span></td><td>1,326h</td><td><span class="cd ok">127d</span></td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-07</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>6,937h</td><td><span class="cd ok">75d</span></td><td>1,600h</td><td><span class="cd ok">115d</span></td><td>11 Aug – 13 Aug</td></tr><tr><td><b>T-08</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>2,407h</td><td><span class="cd ok">264d</span></td><td>1,700h</td><td><span class="cd ok">111d</span></td><td>03 Aug – 05 Aug</td></tr><tr><td><b>T-09</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>5,457h</td><td><span class="cd ok">137d</span></td><td>645h</td><td><span class="cd ok">155d</span></td><td>07 Aug – 09 Aug</td></tr><tr><td><b>T-10</b></td><td>Hornsea 1</td><td><span class="badge RED">RED</span></td><td>3,249h</td><td><span class="cd ok">229d</span></td><td>1,911h</td><td><span class="cd ok">102d</span></td><td>ASAP / next weather window (30 Jul)</td></tr><tr><td><b>T-11</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>7,772h</td><td><span class="cd warn">41d</span></td><td>2,390h</td><td><span class="cd ok">82d</span></td><td>02 Aug – 04 Aug</td></tr><tr><td><b>T-12</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>7,983h</td><td><span class="cd warn">32d</span></td><td>2,051h</td><td><span class="cd ok">97d</span></td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-13</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>1,847h</td><td><span class="cd ok">288d</span></td><td>2,740h</td><td><span class="cd ok">68d</span></td><td>09 Aug – 11 Aug</td></tr><tr><td><b>T-14</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>5,526h</td><td><span class="cd ok">134d</span></td><td>1,207h</td><td><span class="cd ok">132d</span></td><td>10 Aug – 12 Aug</td></tr><tr><td><b>T-15</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>3,654h</td><td><span class="cd ok">212d</span></td><td>784h</td><td><span class="cd ok">149d</span></td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-16</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>3,062h</td><td><span class="cd ok">237d</span></td><td>2,024h</td><td><span class="cd ok">98d</span></td><td>09 Aug – 11 Aug</td></tr><tr><td><b>T-17</b></td><td>Hornsea 3</td><td><span class="badge GREEN">GREEN</span></td><td>7,417h</td><td><span class="cd warn">55d</span></td><td>1,295h</td><td><span class="cd ok">128d</span></td><td>06 Aug – 08 Aug</td></tr><tr><td><b>T-18</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>5,508h</td><td><span class="cd ok">135d</span></td><td>1,145h</td><td><span class="cd ok">134d</span></td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-19</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>4,097h</td><td><span class="cd ok">194d</span></td><td>2,169h</td><td><span class="cd ok">92d</span></td><td>07 Aug – 09 Aug</td></tr><tr><td><b>T-20</b></td><td>Hornsea 1</td><td><span class="badge GREEN">GREEN</span></td><td>5,904h</td><td><span class="cd ok">119d</span></td><td>1,330h</td><td><span class="cd ok">127d</span></td><td>31 Jul – 02 Aug</td></tr><tr><td><b>T-21</b></td><td>Hornsea 2</td><td><span class="badge GREEN">GREEN</span></td><td>6,703h</td><td><span class="cd ok">85d</span></td><td>1,544h</td><td><span class="cd ok">118d</span></td><td>09 Aug – 11 Aug</td></tr><tr><td><b>T-22</b></td><td>Hornsea 3</td><td><span class="badge AMBER">AMBER</span></td><td>8,020h</td><td><span class="cd warn">30d</span></td><td>2,478h</td><td><span class="cd ok">79d</span></td><td>04 Aug – 06 Aug</td></tr><tr><td><b>T-23</b></td><td>West of Duddon Sands</td><td><span class="badge GREEN">GREEN</span></td><td>2,762h</td><td><span class="cd ok">249d</span></td><td>2,125h</td><td><span class="cd ok">93d</span></td><td>01 Aug – 03 Aug</td></tr><tr><td><b>T-24</b></td><td>Race Bank</td><td><span class="badge GREEN">GREEN</span></td><td>4,344h</td><td><span class="cd ok">184d</span></td><td>2,485h</td><td><span class="cd ok">78d</span></td><td>03 Aug – 05 Aug</td></tr></tbody></table></div></div><div id="spares" class="section">
+<h2>📦 Spares & Auto-Reorder</h2>
+<p class="cap">Tap “Mark Installed → Reorder” to simulate installation and raise a replacement PO</p>
+<div class="sched-card"><b>T-01</b> <span class="badge AMBER">AMBER</span> · Hornsea 2<br><div class="part">
+        <b>Gearbox Oil Filter</b> · PN <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×9</span>
+        <div class="order">→ Auto-reorder 1× GF-8842-A to Hornsea 2 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-01','Gearbox Oil Filter','GF-8842-A','Hornsea 2')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Gearbox Oil (200L)</b> · PN <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×15</span>
+        <div class="order">→ Auto-reorder 1× GO-200L-VG320 to Hornsea 2 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-01','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 2')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Hydraulic Filter</b> · PN <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×7</span>
+        <div class="order">→ Auto-reorder 1× HF-2201-B to Hornsea 2 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-01','Hydraulic Filter','HF-2201-B','Hornsea 2')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Main Bearing Grease Kit</b> · PN <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×5</span>
+        <div class="order">→ Auto-reorder 1× MB-GK-55 to Hornsea 2 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-01','Main Bearing Grease Kit','MB-GK-55','Hornsea 2')">Mark Installed → Reorder</button>
+        </div></div><div class="sched-card"><b>T-05</b> <span class="badge AMBER">AMBER</span> · Hornsea 1<br><div class="part">
+        <b>Gearbox Oil Filter</b> · PN <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×14</span>
+        <div class="order">→ Auto-reorder 1× GF-8842-A to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-05','Gearbox Oil Filter','GF-8842-A','Hornsea 1')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Gearbox Oil (200L)</b> · PN <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×22</span>
+        <div class="order">→ Auto-reorder 1× GO-200L-VG320 to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-05','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 1')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Hydraulic Filter</b> · PN <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×11</span>
+        <div class="order">→ Auto-reorder 1× HF-2201-B to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-05','Hydraulic Filter','HF-2201-B','Hornsea 1')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Main Bearing Grease Kit</b> · PN <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×8</span>
+        <div class="order">→ Auto-reorder 1× MB-GK-55 to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-05','Main Bearing Grease Kit','MB-GK-55','Hornsea 1')">Mark Installed → Reorder</button>
+        </div></div><div class="sched-card"><b>T-10</b> <span class="badge RED">RED</span> · Hornsea 1<br><div class="part">
+        <b>Gearbox Oil Filter</b> · PN <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×14</span>
+        <div class="order">→ Auto-reorder 1× GF-8842-A to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-10','Gearbox Oil Filter','GF-8842-A','Hornsea 1')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Gearbox Oil (200L)</b> · PN <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×22</span>
+        <div class="order">→ Auto-reorder 1× GO-200L-VG320 to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-10','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 1')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Hydraulic Filter</b> · PN <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×11</span>
+        <div class="order">→ Auto-reorder 1× HF-2201-B to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-10','Hydraulic Filter','HF-2201-B','Hornsea 1')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Main Bearing Grease Kit</b> · PN <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×8</span>
+        <div class="order">→ Auto-reorder 1× MB-GK-55 to Hornsea 1 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-10','Main Bearing Grease Kit','MB-GK-55','Hornsea 1')">Mark Installed → Reorder</button>
+        </div></div><div class="sched-card"><b>T-22</b> <span class="badge AMBER">AMBER</span> · Hornsea 3<br><div class="part">
+        <b>Gearbox Oil Filter</b> · PN <code>GF-8842-A</code> · <span class="badge STOCK">In stock ×6</span>
+        <div class="order">→ Auto-reorder 1× GF-8842-A to Hornsea 3 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-22','Gearbox Oil Filter','GF-8842-A','Hornsea 3')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Gearbox Oil (200L)</b> · PN <code>GO-200L-VG320</code> · <span class="badge STOCK">In stock ×8</span>
+        <div class="order">→ Auto-reorder 1× GO-200L-VG320 to Hornsea 3 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-22','Gearbox Oil (200L)','GO-200L-VG320','Hornsea 3')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Hydraulic Filter</b> · PN <code>HF-2201-B</code> · <span class="badge STOCK">In stock ×5</span>
+        <div class="order">→ Auto-reorder 1× HF-2201-B to Hornsea 3 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-22','Hydraulic Filter','HF-2201-B','Hornsea 3')">Mark Installed → Reorder</button>
+        </div><div class="part">
+        <b>Main Bearing Grease Kit</b> · PN <code>MB-GK-55</code> · <span class="badge STOCK">In stock ×3</span>
+        <div class="order">→ Auto-reorder 1× MB-GK-55 to Hornsea 3 when used</div>
+        <button class="btn btn-green" onclick="installPart('T-22','Main Bearing Grease Kit','MB-GK-55','Hornsea 3')">Mark Installed → Reorder</button>
+        </div></div></div><div id="detail" class="section"><div class="detail" id="d-T-01"><h2>T-01 — AMBER · Hornsea 2</h2>
+    <div class="rec AMBER">Inspect within 48–72 h. RUL 39 days.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="CONCERN"><b>Vibration (RMS)</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Main Bearing Temp</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Oil Particle Count</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Pitch Variance</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Gearbox Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×9</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×15</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×7</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×5</div></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>39 days</b></p>
+    <p>7-day risk: <b>93 MWh</b> · <b>£6,975</b> · <b>37.2 tCO₂</b></p>
     <p>Hours since oil: <b>2,419 h</b> (<span class="cd ok">264d</span>)</p>
-    <p>Hours since filter: <b>3,744 h</b> (<span class="cd warn">26d</span>)</p>
-    <p>Vessel window: <b>30 Jul – 01 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: Rising oil particles + pitch variance – early degradation</p>
+    <p>Vessel window: <b>02 Aug – 04 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">Rising oil particles + pitch variance – early degradation</p>
+    <button class="btn" onclick="genWO('Hornsea 2','T-01')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-01"></div>
     </div></div></div><div class="detail" id="d-T-02"><h2>T-02 — GREEN · Hornsea 3</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>537 days</b> · Risk: <b>7 MWh</b></p>
-    <p>Hours since oil: <b>2,885 h</b> (<span class="cd ok">244d</span>)</p>
-    <p>Hours since filter: <b>3,004 h</b> (<span class="cd warn">57d</span>)</p>
-    <p>Vessel window: <b>31 Jul – 02 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>230 days</b></p>
+    <p>7-day risk: <b>9 MWh</b> · <b>£675</b> · <b>3.6 tCO₂</b></p>
+    <p>Hours since oil: <b>6,471 h</b> (<span class="cd ok">95d</span>)</p>
+    <p>Vessel window: <b>06 Aug – 08 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 3','T-02')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-02"></div>
     </div></div></div><div class="detail" id="d-T-03"><h2>T-03 — GREEN · West of Duddon Sands</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>449 days</b> · Risk: <b>9 MWh</b></p>
-    <p>Hours since oil: <b>6,450 h</b> (<span class="cd ok">96d</span>)</p>
-    <p>Hours since filter: <b>1,707 h</b> (<span class="cd ok">111d</span>)</p>
-    <p>Vessel window: <b>01 Aug – 03 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-04"><h2>T-04 — GREEN · Race Bank</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>552 days</b> · Risk: <b>3 MWh</b></p>
-    <p>Hours since oil: <b>5,605 h</b> (<span class="cd ok">131d</span>)</p>
-    <p>Hours since filter: <b>2,644 h</b> (<span class="cd ok">72d</span>)</p>
-    <p>Vessel window: <b>10 Aug – 12 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-05"><h2>T-05 — AMBER · Hornsea 1</h2>
-    <div class="rec AMBER">Inspect within 48–72 h. RUL 33 days.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="CONCERN"><b>Vibration (RMS)</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Main Bearing Temp</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Oil Particle Count</b> — ⚠️ CONCERN</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="CONCERN"><b>Pitch Variance</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Gearbox Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×14</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×22</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×11</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×8</div></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>33 days</b> · Risk: <b>84 MWh</b></p>
-    <p>Hours since oil: <b>4,920 h</b> (<span class="cd ok">160d</span>)</p>
-    <p>Hours since filter: <b>1,166 h</b> (<span class="cd ok">133d</span>)</p>
-    <p>Vessel window: <b>05 Aug – 07 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: Rising oil particles + pitch variance – early degradation</p>
-    </div></div></div><div class="detail" id="d-T-06"><h2>T-06 — GREEN · Hornsea 2</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>249 days</b> · Risk: <b>0 MWh</b></p>
-    <p>Hours since oil: <b>5,942 h</b> (<span class="cd ok">117d</span>)</p>
-    <p>Hours since filter: <b>2,554 h</b> (<span class="cd ok">76d</span>)</p>
-    <p>Vessel window: <b>09 Aug – 11 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-07"><h2>T-07 — GREEN · Hornsea 3</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>325 days</b> · Risk: <b>8 MWh</b></p>
-    <p>Hours since oil: <b>5,241 h</b> (<span class="cd ok">146d</span>)</p>
-    <p>Hours since filter: <b>3,247 h</b> (<span class="cd warn">47d</span>)</p>
-    <p>Vessel window: <b>10 Aug – 12 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-08"><h2>T-08 — GREEN · West of Duddon Sands</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>527 days</b> · Risk: <b>12 MWh</b></p>
-    <p>Hours since oil: <b>7,429 h</b> (<span class="cd warn">55d</span>)</p>
-    <p>Hours since filter: <b>2,322 h</b> (<span class="cd ok">85d</span>)</p>
-    <p>Vessel window: <b>10 Aug – 12 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-09"><h2>T-09 — GREEN · Race Bank</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>381 days</b> · Risk: <b>13 MWh</b></p>
-    <p>Hours since oil: <b>3,293 h</b> (<span class="cd ok">227d</span>)</p>
-    <p>Hours since filter: <b>1,473 h</b> (<span class="cd ok">121d</span>)</p>
-    <p>Vessel window: <b>01 Aug – 03 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-10"><h2>T-10 — RED · Hornsea 1</h2>
-    <div class="rec RED">IMMEDIATE action. Risk of offline within 5 days.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="IMMEDIATE"><b>Vibration (RMS)</b> — 🚨 IMMEDIATE</li><li class="IMMEDIATE"><b>Main Bearing Temp</b> — 🚨 IMMEDIATE</li><li class="IMMEDIATE"><b>Oil Particle Count</b> — 🚨 IMMEDIATE</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="IMMEDIATE"><b>Pitch Variance</b> — 🚨 IMMEDIATE</li><li class="IMMEDIATE"><b>Gearbox Temperature</b> — 🚨 IMMEDIATE</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="IMMEDIATE"><b>Power vs Expected</b> — 🚨 IMMEDIATE</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×14</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×22</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×11</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×8</div><div class="part"><b>Pitch System Filter</b> (PN PF-1190) — In stock ×16</div></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>5 days</b> · Risk: <b>328 MWh</b></p>
-    <p>Hours since oil: <b>7,301 h</b> (<span class="cd warn">60d</span>)</p>
-    <p>Hours since filter: <b>3,627 h</b> (<span class="cd warn">31d</span>)</p>
-    <p>Vessel window: <b>ASAP / next weather window (01 Aug)</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: High vibration + elevated gearbox temp + oil debris – gearbox / bearing risk</p>
-    </div></div></div><div class="detail" id="d-T-11"><h2>T-11 — GREEN · Hornsea 2</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>320 days</b> · Risk: <b>12 MWh</b></p>
-    <p>Hours since oil: <b>2,572 h</b> (<span class="cd ok">257d</span>)</p>
-    <p>Hours since filter: <b>3,167 h</b> (<span class="cd warn">50d</span>)</p>
-    <p>Vessel window: <b>30 Jul – 01 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-12"><h2>T-12 — GREEN · Hornsea 3</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>225 days</b> · Risk: <b>16 MWh</b></p>
-    <p>Hours since oil: <b>2,008 h</b> (<span class="cd ok">281d</span>)</p>
-    <p>Hours since filter: <b>2,172 h</b> (<span class="cd ok">92d</span>)</p>
-    <p>Vessel window: <b>10 Aug – 12 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-13"><h2>T-13 — GREEN · West of Duddon Sands</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>398 days</b> · Risk: <b>16 MWh</b></p>
-    <p>Hours since oil: <b>5,757 h</b> (<span class="cd ok">125d</span>)</p>
-    <p>Hours since filter: <b>1,729 h</b> (<span class="cd ok">110d</span>)</p>
-    <p>Vessel window: <b>07 Aug – 09 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-14"><h2>T-14 — GREEN · Race Bank</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>471 days</b> · Risk: <b>17 MWh</b></p>
-    <p>Hours since oil: <b>3,675 h</b> (<span class="cd ok">211d</span>)</p>
-    <p>Hours since filter: <b>2,212 h</b> (<span class="cd ok">90d</span>)</p>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>495 days</b></p>
+    <p>7-day risk: <b>1 MWh</b> · <b>£75</b> · <b>0.4 tCO₂</b></p>
+    <p>Hours since oil: <b>3,065 h</b> (<span class="cd ok">237d</span>)</p>
     <p>Vessel window: <b>31 Jul – 02 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-15"><h2>T-15 — GREEN · Hornsea 1</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>404 days</b> · Risk: <b>2 MWh</b></p>
-    <p>Hours since oil: <b>2,500 h</b> (<span class="cd ok">260d</span>)</p>
-    <p>Hours since filter: <b>1,411 h</b> (<span class="cd ok">123d</span>)</p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('West of Duddon Sands','T-03')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-03"></div>
+    </div></div></div><div class="detail" id="d-T-04"><h2>T-04 — GREEN · Race Bank</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>492 days</b></p>
+    <p>7-day risk: <b>12 MWh</b> · <b>£900</b> · <b>4.8 tCO₂</b></p>
+    <p>Hours since oil: <b>2,044 h</b> (<span class="cd ok">279d</span>)</p>
+    <p>Vessel window: <b>11 Aug – 13 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Race Bank','T-04')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-04"></div>
+    </div></div></div><div class="detail" id="d-T-05"><h2>T-05 — AMBER · Hornsea 1</h2>
+    <div class="rec AMBER">Inspect within 48–72 h. RUL 53 days.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="CONCERN"><b>Vibration (RMS)</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Main Bearing Temp</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Oil Particle Count</b> — ⚠️ CONCERN</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="CONCERN"><b>Pitch Variance</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Gearbox Temperature</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×14</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×22</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×11</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×8</div></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>53 days</b></p>
+    <p>7-day risk: <b>105 MWh</b> · <b>£7,875</b> · <b>42.0 tCO₂</b></p>
+    <p>Hours since oil: <b>5,756 h</b> (<span class="cd ok">125d</span>)</p>
+    <p>Vessel window: <b>07 Aug – 09 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">Rising oil particles + pitch variance – early degradation</p>
+    <button class="btn" onclick="genWO('Hornsea 1','T-05')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-05"></div>
+    </div></div></div><div class="detail" id="d-T-06"><h2>T-06 — GREEN · Hornsea 2</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>320 days</b></p>
+    <p>7-day risk: <b>9 MWh</b> · <b>£675</b> · <b>3.6 tCO₂</b></p>
+    <p>Hours since oil: <b>3,438 h</b> (<span class="cd ok">221d</span>)</p>
     <p>Vessel window: <b>01 Aug – 03 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-16"><h2>T-16 — GREEN · Hornsea 2</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>377 days</b> · Risk: <b>16 MWh</b></p>
-    <p>Hours since oil: <b>1,438 h</b> (<span class="cd ok">305d</span>)</p>
-    <p>Hours since filter: <b>2,750 h</b> (<span class="cd ok">67d</span>)</p>
-    <p>Vessel window: <b>01 Aug – 03 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-17"><h2>T-17 — GREEN · Hornsea 3</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>313 days</b> · Risk: <b>9 MWh</b></p>
-    <p>Hours since oil: <b>2,166 h</b> (<span class="cd ok">274d</span>)</p>
-    <p>Hours since filter: <b>1,814 h</b> (<span class="cd ok">106d</span>)</p>
-    <p>Vessel window: <b>04 Aug – 06 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-18"><h2>T-18 — GREEN · West of Duddon Sands</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>432 days</b> · Risk: <b>1 MWh</b></p>
-    <p>Hours since oil: <b>4,411 h</b> (<span class="cd ok">181d</span>)</p>
-    <p>Hours since filter: <b>3,708 h</b> (<span class="cd warn">28d</span>)</p>
-    <p>Vessel window: <b>12 Aug – 14 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-19"><h2>T-19 — GREEN · Race Bank</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>447 days</b> · Risk: <b>17 MWh</b></p>
-    <p>Hours since oil: <b>3,194 h</b> (<span class="cd ok">231d</span>)</p>
-    <p>Hours since filter: <b>2,410 h</b> (<span class="cd ok">82d</span>)</p>
-    <p>Vessel window: <b>10 Aug – 12 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-20"><h2>T-20 — GREEN · Hornsea 1</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>316 days</b> · Risk: <b>17 MWh</b></p>
-    <p>Hours since oil: <b>6,246 h</b> (<span class="cd ok">104d</span>)</p>
-    <p>Hours since filter: <b>1,096 h</b> (<span class="cd ok">136d</span>)</p>
-    <p>Vessel window: <b>10 Aug – 12 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-21"><h2>T-21 — GREEN · Hornsea 2</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>380 days</b> · Risk: <b>13 MWh</b></p>
-    <p>Hours since oil: <b>2,137 h</b> (<span class="cd ok">275d</span>)</p>
-    <p>Hours since filter: <b>3,700 h</b> (<span class="cd warn">28d</span>)</p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 2','T-06')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-06"></div>
+    </div></div></div><div class="detail" id="d-T-07"><h2>T-07 — GREEN · Hornsea 3</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>237 days</b></p>
+    <p>7-day risk: <b>5 MWh</b> · <b>£375</b> · <b>2.0 tCO₂</b></p>
+    <p>Hours since oil: <b>6,937 h</b> (<span class="cd ok">75d</span>)</p>
+    <p>Vessel window: <b>11 Aug – 13 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 3','T-07')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-07"></div>
+    </div></div></div><div class="detail" id="d-T-08"><h2>T-08 — GREEN · West of Duddon Sands</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>445 days</b></p>
+    <p>7-day risk: <b>11 MWh</b> · <b>£825</b> · <b>4.4 tCO₂</b></p>
+    <p>Hours since oil: <b>2,407 h</b> (<span class="cd ok">264d</span>)</p>
     <p>Vessel window: <b>03 Aug – 05 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('West of Duddon Sands','T-08')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-08"></div>
+    </div></div></div><div class="detail" id="d-T-09"><h2>T-09 — GREEN · Race Bank</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>255 days</b></p>
+    <p>7-day risk: <b>13 MWh</b> · <b>£975</b> · <b>5.2 tCO₂</b></p>
+    <p>Hours since oil: <b>5,457 h</b> (<span class="cd ok">137d</span>)</p>
+    <p>Vessel window: <b>07 Aug – 09 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Race Bank','T-09')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-09"></div>
+    </div></div></div><div class="detail" id="d-T-10"><h2>T-10 — RED · Hornsea 1</h2>
+    <div class="rec RED">IMMEDIATE action. Risk of offline within 7 days.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="IMMEDIATE"><b>Vibration (RMS)</b> — 🚨 IMMEDIATE</li><li class="IMMEDIATE"><b>Main Bearing Temp</b> — 🚨 IMMEDIATE</li><li class="IMMEDIATE"><b>Oil Particle Count</b> — 🚨 IMMEDIATE</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="IMMEDIATE"><b>Pitch Variance</b> — 🚨 IMMEDIATE</li><li class="IMMEDIATE"><b>Gearbox Temperature</b> — 🚨 IMMEDIATE</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="IMMEDIATE"><b>Power vs Expected</b> — 🚨 IMMEDIATE</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×14</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×22</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×11</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×8</div></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>7 days</b></p>
+    <p>7-day risk: <b>289 MWh</b> · <b>£21,675</b> · <b>115.6 tCO₂</b></p>
+    <p>Hours since oil: <b>3,249 h</b> (<span class="cd ok">229d</span>)</p>
+    <p>Vessel window: <b>ASAP / next weather window (30 Jul)</b></p>
+    <p style="margin-top:6px;font-size:.85rem">High vibration + elevated gearbox temp + oil debris – gearbox / bearing risk</p>
+    <button class="btn" onclick="genWO('Hornsea 1','T-10')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-10"></div>
+    </div></div></div><div class="detail" id="d-T-11"><h2>T-11 — GREEN · Hornsea 2</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>486 days</b></p>
+    <p>7-day risk: <b>8 MWh</b> · <b>£600</b> · <b>3.2 tCO₂</b></p>
+    <p>Hours since oil: <b>7,772 h</b> (<span class="cd warn">41d</span>)</p>
+    <p>Vessel window: <b>02 Aug – 04 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 2','T-11')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-11"></div>
+    </div></div></div><div class="detail" id="d-T-12"><h2>T-12 — GREEN · Hornsea 3</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>264 days</b></p>
+    <p>7-day risk: <b>9 MWh</b> · <b>£675</b> · <b>3.6 tCO₂</b></p>
+    <p>Hours since oil: <b>7,983 h</b> (<span class="cd warn">32d</span>)</p>
+    <p>Vessel window: <b>04 Aug – 06 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 3','T-12')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-12"></div>
+    </div></div></div><div class="detail" id="d-T-13"><h2>T-13 — GREEN · West of Duddon Sands</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>269 days</b></p>
+    <p>7-day risk: <b>14 MWh</b> · <b>£1,050</b> · <b>5.6 tCO₂</b></p>
+    <p>Hours since oil: <b>1,847 h</b> (<span class="cd ok">288d</span>)</p>
+    <p>Vessel window: <b>09 Aug – 11 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('West of Duddon Sands','T-13')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-13"></div>
+    </div></div></div><div class="detail" id="d-T-14"><h2>T-14 — GREEN · Race Bank</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>269 days</b></p>
+    <p>7-day risk: <b>10 MWh</b> · <b>£750</b> · <b>4.0 tCO₂</b></p>
+    <p>Hours since oil: <b>5,526 h</b> (<span class="cd ok">134d</span>)</p>
+    <p>Vessel window: <b>10 Aug – 12 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Race Bank','T-14')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-14"></div>
+    </div></div></div><div class="detail" id="d-T-15"><h2>T-15 — GREEN · Hornsea 1</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>573 days</b></p>
+    <p>7-day risk: <b>8 MWh</b> · <b>£600</b> · <b>3.2 tCO₂</b></p>
+    <p>Hours since oil: <b>3,654 h</b> (<span class="cd ok">212d</span>)</p>
+    <p>Vessel window: <b>04 Aug – 06 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 1','T-15')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-15"></div>
+    </div></div></div><div class="detail" id="d-T-16"><h2>T-16 — GREEN · Hornsea 2</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>341 days</b></p>
+    <p>7-day risk: <b>5 MWh</b> · <b>£375</b> · <b>2.0 tCO₂</b></p>
+    <p>Hours since oil: <b>3,062 h</b> (<span class="cd ok">237d</span>)</p>
+    <p>Vessel window: <b>09 Aug – 11 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 2','T-16')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-16"></div>
+    </div></div></div><div class="detail" id="d-T-17"><h2>T-17 — GREEN · Hornsea 3</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>236 days</b></p>
+    <p>7-day risk: <b>14 MWh</b> · <b>£1,050</b> · <b>5.6 tCO₂</b></p>
+    <p>Hours since oil: <b>7,417 h</b> (<span class="cd warn">55d</span>)</p>
+    <p>Vessel window: <b>06 Aug – 08 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 3','T-17')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-17"></div>
+    </div></div></div><div class="detail" id="d-T-18"><h2>T-18 — GREEN · West of Duddon Sands</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>380 days</b></p>
+    <p>7-day risk: <b>3 MWh</b> · <b>£225</b> · <b>1.2 tCO₂</b></p>
+    <p>Hours since oil: <b>5,508 h</b> (<span class="cd ok">135d</span>)</p>
+    <p>Vessel window: <b>04 Aug – 06 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('West of Duddon Sands','T-18')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-18"></div>
+    </div></div></div><div class="detail" id="d-T-19"><h2>T-19 — GREEN · Race Bank</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>346 days</b></p>
+    <p>7-day risk: <b>7 MWh</b> · <b>£525</b> · <b>2.8 tCO₂</b></p>
+    <p>Hours since oil: <b>4,097 h</b> (<span class="cd ok">194d</span>)</p>
+    <p>Vessel window: <b>07 Aug – 09 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Race Bank','T-19')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-19"></div>
+    </div></div></div><div class="detail" id="d-T-20"><h2>T-20 — GREEN · Hornsea 1</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>372 days</b></p>
+    <p>7-day risk: <b>12 MWh</b> · <b>£900</b> · <b>4.8 tCO₂</b></p>
+    <p>Hours since oil: <b>5,904 h</b> (<span class="cd ok">119d</span>)</p>
+    <p>Vessel window: <b>31 Jul – 02 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 1','T-20')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-20"></div>
+    </div></div></div><div class="detail" id="d-T-21"><h2>T-21 — GREEN · Hornsea 2</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>414 days</b></p>
+    <p>7-day risk: <b>15 MWh</b> · <b>£1,125</b> · <b>6.0 tCO₂</b></p>
+    <p>Hours since oil: <b>6,703 h</b> (<span class="cd ok">85d</span>)</p>
+    <p>Vessel window: <b>09 Aug – 11 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Hornsea 2','T-21')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-21"></div>
     </div></div></div><div class="detail" id="d-T-22"><h2>T-22 — AMBER · Hornsea 3</h2>
-    <div class="rec AMBER">Inspect within 48–72 h. RUL 45 days.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="CONCERN"><b>Vibration (RMS)</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Main Bearing Temp</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Oil Particle Count</b> — ⚠️ CONCERN</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="CONCERN"><b>Pitch Variance</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Gearbox Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×6</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×8</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×5</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×3</div></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>45 days</b> · Risk: <b>58 MWh</b></p>
-    <p>Hours since oil: <b>7,358 h</b> (<span class="cd warn">58d</span>)</p>
-    <p>Hours since filter: <b>1,596 h</b> (<span class="cd ok">116d</span>)</p>
-    <p>Vessel window: <b>01 Aug – 03 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: Rising oil particles + pitch variance – early degradation</p>
+    <div class="rec AMBER">Inspect within 48–72 h. RUL 39 days.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="CONCERN"><b>Vibration (RMS)</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Main Bearing Temp</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Oil Particle Count</b> — ⚠️ CONCERN</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="CONCERN"><b>Pitch Variance</b> — ⚠️ CONCERN</li><li class="CONCERN"><b>Gearbox Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Power vs Expected</b> — ⚠️ CONCERN</li></ul><h4 style="margin-top:10px">Parts Required</h4><div class="part"><b>Gearbox Oil Filter</b> (PN GF-8842-A) — In stock ×6</div><div class="part"><b>Gearbox Oil (200L)</b> (PN GO-200L-VG320) — In stock ×8</div><div class="part"><b>Hydraulic Filter</b> (PN HF-2201-B) — In stock ×5</div><div class="part"><b>Main Bearing Grease Kit</b> (PN MB-GK-55) — In stock ×3</div></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>39 days</b></p>
+    <p>7-day risk: <b>96 MWh</b> · <b>£7,200</b> · <b>38.4 tCO₂</b></p>
+    <p>Hours since oil: <b>8,020 h</b> (<span class="cd warn">30d</span>)</p>
+    <p>Vessel window: <b>04 Aug – 06 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">Rising oil particles + pitch variance – early degradation</p>
+    <button class="btn" onclick="genWO('Hornsea 3','T-22')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-22"></div>
     </div></div></div><div class="detail" id="d-T-23"><h2>T-23 — GREEN · West of Duddon Sands</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>517 days</b> · Risk: <b>2 MWh</b></p>
-    <p>Hours since oil: <b>4,467 h</b> (<span class="cd ok">178d</span>)</p>
-    <p>Hours since filter: <b>3,264 h</b> (<span class="cd warn">46d</span>)</p>
-    <p>Vessel window: <b>30 Jul – 01 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
-    </div></div></div><div class="detail" id="d-T-24"><h2>T-24 — GREEN · Race Bank</h2>
-    <div class="rec GREEN">Normal operation.</div><div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div><h4>Predictive + Schedule</h4>
-    <p>RUL: <b>344 days</b> · Risk: <b>16 MWh</b></p>
-    <p>Hours since oil: <b>8,014 h</b> (<span class="cd warn">31d</span>)</p>
-    <p>Hours since filter: <b>714 h</b> (<span class="cd ok">152d</span>)</p>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="CONCERN"><b>Generator Current</b> — ⚠️ CONCERN</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>513 days</b></p>
+    <p>7-day risk: <b>14 MWh</b> · <b>£1,050</b> · <b>5.6 tCO₂</b></p>
+    <p>Hours since oil: <b>2,762 h</b> (<span class="cd ok">249d</span>)</p>
     <p>Vessel window: <b>01 Aug – 03 Aug</b></p>
-    <p style="margin-top:6px;font-size:.85rem">Issue: All systems within normal operating range</p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('West of Duddon Sands','T-23')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-23"></div>
+    </div></div></div><div class="detail" id="d-T-24"><h2>T-24 — GREEN · Race Bank</h2>
+    <div class="rec GREEN">Normal operation.</div>
+    <div class="grid2"><div><h4>Component Checklist</h4><ul><li class="PASS"><b>Vibration (RMS)</b> — ✅ PASS</li><li class="PASS"><b>Main Bearing Temp</b> — ✅ PASS</li><li class="PASS"><b>Oil Particle Count</b> — ✅ PASS</li><li class="PASS"><b>Generator Current</b> — ✅ PASS</li><li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li><li class="PASS"><b>Gearbox Temperature</b> — ✅ PASS</li><li class="CONCERN"><b>Nacelle Temperature</b> — ⚠️ CONCERN</li><li class="PASS"><b>Power vs Expected</b> — ✅ PASS</li></ul><h4 style="margin-top:10px">Parts Required</h4><p style="color:var(--g)">No parts required</p></div><div>
+    <h4>Predictive + Financial Risk</h4>
+    <p>RUL: <b>454 days</b></p>
+    <p>7-day risk: <b>16 MWh</b> · <b>£1,200</b> · <b>6.4 tCO₂</b></p>
+    <p>Hours since oil: <b>4,344 h</b> (<span class="cd ok">184d</span>)</p>
+    <p>Vessel window: <b>03 Aug – 05 Aug</b></p>
+    <p style="margin-top:6px;font-size:.85rem">All systems within normal operating range</p>
+    <button class="btn" onclick="genWO('Race Bank','T-24')">Generate Work Order</button>
+    <div class="wo-box" id="wo-T-24"></div>
     </div></div></div></div><div id="forecast" class="section">
-<h2>Performance & Production Forecast</h2>
-<p class="cap">Hover over any bar to see the immediate issue · Total 7-day risk: <b>769 MWh</b></p>
+<h2>Performance & Financial Forecast</h2>
+<p class="cap">Hover/tap bars for issue details · Total risk: <b>778 MWh</b> · <b>£58,350</b> · <b>311.2 tCO₂</b></p>
 <div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-10</span>
-    <div class="bar" style="width:420px;background:#ef4444"></div>
-    <span style="font-size:.8rem">328 MWh</span>
-    <div class="tip"><b>T-10 — RED</b><br>High vibration + elevated gearbox temp + oil debris – gearbox / bearing risk<br>RUL: 5 days · Site: Hornsea 1</div>
+    <span style="width:48px;font-size:.8rem">T-10</span>
+    <div class="bar" style="width:280px;background:#ef4444"></div>
+    <span style="font-size:.8rem">289 MWh · £21,675</span>
+    <div class="tip"><b>T-10 — RED</b><br>High vibration + elevated gearbox temp + oil debris – gearbox / bearing risk<br>RUL 7d · £21,675 · 115.6 tCO₂<br>Site: Hornsea 1</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-01</span>
-    <div class="bar" style="width:119px;background:#f59e0b"></div>
-    <span style="font-size:.8rem">93 MWh</span>
-    <div class="tip"><b>T-01 — AMBER</b><br>Rising oil particles + pitch variance – early degradation<br>RUL: 39 days · Site: Hornsea 2</div>
+    <span style="width:48px;font-size:.8rem">T-05</span>
+    <div class="bar" style="width:101px;background:#f59e0b"></div>
+    <span style="font-size:.8rem">105 MWh · £7,875</span>
+    <div class="tip"><b>T-05 — AMBER</b><br>Rising oil particles + pitch variance – early degradation<br>RUL 53d · £7,875 · 42.0 tCO₂<br>Site: Hornsea 1</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-05</span>
-    <div class="bar" style="width:107px;background:#f59e0b"></div>
-    <span style="font-size:.8rem">84 MWh</span>
-    <div class="tip"><b>T-05 — AMBER</b><br>Rising oil particles + pitch variance – early degradation<br>RUL: 33 days · Site: Hornsea 1</div>
+    <span style="width:48px;font-size:.8rem">T-22</span>
+    <div class="bar" style="width:93px;background:#f59e0b"></div>
+    <span style="font-size:.8rem">96 MWh · £7,200</span>
+    <div class="tip"><b>T-22 — AMBER</b><br>Rising oil particles + pitch variance – early degradation<br>RUL 39d · £7,200 · 38.4 tCO₂<br>Site: Hornsea 3</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-22</span>
-    <div class="bar" style="width:74px;background:#f59e0b"></div>
-    <span style="font-size:.8rem">58 MWh</span>
-    <div class="tip"><b>T-22 — AMBER</b><br>Rising oil particles + pitch variance – early degradation<br>RUL: 45 days · Site: Hornsea 3</div>
+    <span style="width:48px;font-size:.8rem">T-01</span>
+    <div class="bar" style="width:90px;background:#f59e0b"></div>
+    <span style="font-size:.8rem">93 MWh · £6,975</span>
+    <div class="tip"><b>T-01 — AMBER</b><br>Rising oil particles + pitch variance – early degradation<br>RUL 39d · £6,975 · 37.2 tCO₂<br>Site: Hornsea 2</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-14</span>
-    <div class="bar" style="width:21px;background:#22c55e"></div>
-    <span style="font-size:.8rem">17 MWh</span>
-    <div class="tip"><b>T-14 — GREEN</b><br>All systems within normal operating range<br>RUL: 471 days · Site: Race Bank</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-19</span>
-    <div class="bar" style="width:21px;background:#22c55e"></div>
-    <span style="font-size:.8rem">17 MWh</span>
-    <div class="tip"><b>T-19 — GREEN</b><br>All systems within normal operating range<br>RUL: 447 days · Site: Race Bank</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-20</span>
-    <div class="bar" style="width:21px;background:#22c55e"></div>
-    <span style="font-size:.8rem">17 MWh</span>
-    <div class="tip"><b>T-20 — GREEN</b><br>All systems within normal operating range<br>RUL: 316 days · Site: Hornsea 1</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-12</span>
-    <div class="bar" style="width:20px;background:#22c55e"></div>
-    <span style="font-size:.8rem">16 MWh</span>
-    <div class="tip"><b>T-12 — GREEN</b><br>All systems within normal operating range<br>RUL: 225 days · Site: Hornsea 3</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-13</span>
-    <div class="bar" style="width:20px;background:#22c55e"></div>
-    <span style="font-size:.8rem">16 MWh</span>
-    <div class="tip"><b>T-13 — GREEN</b><br>All systems within normal operating range<br>RUL: 398 days · Site: West of Duddon Sands</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-16</span>
-    <div class="bar" style="width:20px;background:#22c55e"></div>
-    <span style="font-size:.8rem">16 MWh</span>
-    <div class="tip"><b>T-16 — GREEN</b><br>All systems within normal operating range<br>RUL: 377 days · Site: Hornsea 2</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-24</span>
-    <div class="bar" style="width:20px;background:#22c55e"></div>
-    <span style="font-size:.8rem">16 MWh</span>
-    <div class="tip"><b>T-24 — GREEN</b><br>All systems within normal operating range<br>RUL: 344 days · Site: Race Bank</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-09</span>
-    <div class="bar" style="width:16px;background:#22c55e"></div>
-    <span style="font-size:.8rem">13 MWh</span>
-    <div class="tip"><b>T-09 — GREEN</b><br>All systems within normal operating range<br>RUL: 381 days · Site: Race Bank</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-21</span>
-    <div class="bar" style="width:16px;background:#22c55e"></div>
-    <span style="font-size:.8rem">13 MWh</span>
-    <div class="tip"><b>T-21 — GREEN</b><br>All systems within normal operating range<br>RUL: 380 days · Site: Hornsea 2</div>
-    </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-08</span>
+    <span style="width:48px;font-size:.8rem">T-24</span>
     <div class="bar" style="width:15px;background:#22c55e"></div>
-    <span style="font-size:.8rem">12 MWh</span>
-    <div class="tip"><b>T-08 — GREEN</b><br>All systems within normal operating range<br>RUL: 527 days · Site: West of Duddon Sands</div>
+    <span style="font-size:.8rem">16 MWh · £1,200</span>
+    <div class="tip"><b>T-24 — GREEN</b><br>All systems within normal operating range<br>RUL 454d · £1,200 · 6.4 tCO₂<br>Site: Race Bank</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-11</span>
-    <div class="bar" style="width:15px;background:#22c55e"></div>
-    <span style="font-size:.8rem">12 MWh</span>
-    <div class="tip"><b>T-11 — GREEN</b><br>All systems within normal operating range<br>RUL: 320 days · Site: Hornsea 2</div>
+    <span style="width:48px;font-size:.8rem">T-21</span>
+    <div class="bar" style="width:14px;background:#22c55e"></div>
+    <span style="font-size:.8rem">15 MWh · £1,125</span>
+    <div class="tip"><b>T-21 — GREEN</b><br>All systems within normal operating range<br>RUL 414d · £1,125 · 6.0 tCO₂<br>Site: Hornsea 2</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-03</span>
+    <span style="width:48px;font-size:.8rem">T-13</span>
+    <div class="bar" style="width:13px;background:#22c55e"></div>
+    <span style="font-size:.8rem">14 MWh · £1,050</span>
+    <div class="tip"><b>T-13 — GREEN</b><br>All systems within normal operating range<br>RUL 269d · £1,050 · 5.6 tCO₂<br>Site: West of Duddon Sands</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-17</span>
+    <div class="bar" style="width:13px;background:#22c55e"></div>
+    <span style="font-size:.8rem">14 MWh · £1,050</span>
+    <div class="tip"><b>T-17 — GREEN</b><br>All systems within normal operating range<br>RUL 236d · £1,050 · 5.6 tCO₂<br>Site: Hornsea 3</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-23</span>
+    <div class="bar" style="width:13px;background:#22c55e"></div>
+    <span style="font-size:.8rem">14 MWh · £1,050</span>
+    <div class="tip"><b>T-23 — GREEN</b><br>All systems within normal operating range<br>RUL 513d · £1,050 · 5.6 tCO₂<br>Site: West of Duddon Sands</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-09</span>
+    <div class="bar" style="width:12px;background:#22c55e"></div>
+    <span style="font-size:.8rem">13 MWh · £975</span>
+    <div class="tip"><b>T-09 — GREEN</b><br>All systems within normal operating range<br>RUL 255d · £975 · 5.2 tCO₂<br>Site: Race Bank</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-04</span>
     <div class="bar" style="width:11px;background:#22c55e"></div>
-    <span style="font-size:.8rem">9 MWh</span>
-    <div class="tip"><b>T-03 — GREEN</b><br>All systems within normal operating range<br>RUL: 449 days · Site: West of Duddon Sands</div>
+    <span style="font-size:.8rem">12 MWh · £900</span>
+    <div class="tip"><b>T-04 — GREEN</b><br>All systems within normal operating range<br>RUL 492d · £900 · 4.8 tCO₂<br>Site: Race Bank</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-17</span>
+    <span style="width:48px;font-size:.8rem">T-20</span>
     <div class="bar" style="width:11px;background:#22c55e"></div>
-    <span style="font-size:.8rem">9 MWh</span>
-    <div class="tip"><b>T-17 — GREEN</b><br>All systems within normal operating range<br>RUL: 313 days · Site: Hornsea 3</div>
+    <span style="font-size:.8rem">12 MWh · £900</span>
+    <div class="tip"><b>T-20 — GREEN</b><br>All systems within normal operating range<br>RUL 372d · £900 · 4.8 tCO₂<br>Site: Hornsea 1</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-07</span>
+    <span style="width:48px;font-size:.8rem">T-08</span>
     <div class="bar" style="width:10px;background:#22c55e"></div>
-    <span style="font-size:.8rem">8 MWh</span>
-    <div class="tip"><b>T-07 — GREEN</b><br>All systems within normal operating range<br>RUL: 325 days · Site: Hornsea 3</div>
+    <span style="font-size:.8rem">11 MWh · £825</span>
+    <div class="tip"><b>T-08 — GREEN</b><br>All systems within normal operating range<br>RUL 445d · £825 · 4.4 tCO₂<br>Site: West of Duddon Sands</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-02</span>
+    <span style="width:48px;font-size:.8rem">T-14</span>
+    <div class="bar" style="width:9px;background:#22c55e"></div>
+    <span style="font-size:.8rem">10 MWh · £750</span>
+    <div class="tip"><b>T-14 — GREEN</b><br>All systems within normal operating range<br>RUL 269d · £750 · 4.0 tCO₂<br>Site: Race Bank</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-02</span>
     <div class="bar" style="width:8px;background:#22c55e"></div>
-    <span style="font-size:.8rem">7 MWh</span>
-    <div class="tip"><b>T-02 — GREEN</b><br>All systems within normal operating range<br>RUL: 537 days · Site: Hornsea 3</div>
+    <span style="font-size:.8rem">9 MWh · £675</span>
+    <div class="tip"><b>T-02 — GREEN</b><br>All systems within normal operating range<br>RUL 230d · £675 · 3.6 tCO₂<br>Site: Hornsea 3</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-04</span>
-    <div class="bar" style="width:4px;background:#22c55e"></div>
-    <span style="font-size:.8rem">3 MWh</span>
-    <div class="tip"><b>T-04 — GREEN</b><br>All systems within normal operating range<br>RUL: 552 days · Site: Race Bank</div>
+    <span style="width:48px;font-size:.8rem">T-06</span>
+    <div class="bar" style="width:8px;background:#22c55e"></div>
+    <span style="font-size:.8rem">9 MWh · £675</span>
+    <div class="tip"><b>T-06 — GREEN</b><br>All systems within normal operating range<br>RUL 320d · £675 · 3.6 tCO₂<br>Site: Hornsea 2</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-15</span>
-    <div class="bar" style="width:4px;background:#22c55e"></div>
-    <span style="font-size:.8rem">2 MWh</span>
-    <div class="tip"><b>T-15 — GREEN</b><br>All systems within normal operating range<br>RUL: 404 days · Site: Hornsea 1</div>
+    <span style="width:48px;font-size:.8rem">T-12</span>
+    <div class="bar" style="width:8px;background:#22c55e"></div>
+    <span style="font-size:.8rem">9 MWh · £675</span>
+    <div class="tip"><b>T-12 — GREEN</b><br>All systems within normal operating range<br>RUL 264d · £675 · 3.6 tCO₂<br>Site: Hornsea 3</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-23</span>
-    <div class="bar" style="width:4px;background:#22c55e"></div>
-    <span style="font-size:.8rem">2 MWh</span>
-    <div class="tip"><b>T-23 — GREEN</b><br>All systems within normal operating range<br>RUL: 517 days · Site: West of Duddon Sands</div>
+    <span style="width:48px;font-size:.8rem">T-11</span>
+    <div class="bar" style="width:7px;background:#22c55e"></div>
+    <span style="font-size:.8rem">8 MWh · £600</span>
+    <div class="tip"><b>T-11 — GREEN</b><br>All systems within normal operating range<br>RUL 486d · £600 · 3.2 tCO₂<br>Site: Hornsea 2</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-18</span>
-    <div class="bar" style="width:4px;background:#22c55e"></div>
-    <span style="font-size:.8rem">1 MWh</span>
-    <div class="tip"><b>T-18 — GREEN</b><br>All systems within normal operating range<br>RUL: 432 days · Site: West of Duddon Sands</div>
+    <span style="width:48px;font-size:.8rem">T-15</span>
+    <div class="bar" style="width:7px;background:#22c55e"></div>
+    <span style="font-size:.8rem">8 MWh · £600</span>
+    <div class="tip"><b>T-15 — GREEN</b><br>All systems within normal operating range<br>RUL 573d · £600 · 3.2 tCO₂<br>Site: Hornsea 1</div>
     </div><div class="bar-row">
-    <span style="width:52px;font-size:.8rem">T-06</span>
+    <span style="width:48px;font-size:.8rem">T-19</span>
+    <div class="bar" style="width:6px;background:#22c55e"></div>
+    <span style="font-size:.8rem">7 MWh · £525</span>
+    <div class="tip"><b>T-19 — GREEN</b><br>All systems within normal operating range<br>RUL 346d · £525 · 2.8 tCO₂<br>Site: Race Bank</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-07</span>
     <div class="bar" style="width:4px;background:#22c55e"></div>
-    <span style="font-size:.8rem">0 MWh</span>
-    <div class="tip"><b>T-06 — GREEN</b><br>All systems within normal operating range<br>RUL: 249 days · Site: Hornsea 2</div>
-    </div></div><div id="alerts" class="section"><h2>Intelligent Alert Centre</h2><div class="rec AMBER" style="margin-bottom:8px"><b>T-01</b> (Hornsea 2) — AMBER · RUL 39d · 93 MWh<br>Rising oil particles + pitch variance – early degradation<br>Window: 30 Jul – 01 Aug</div><div class="rec AMBER" style="margin-bottom:8px"><b>T-05</b> (Hornsea 1) — AMBER · RUL 33d · 84 MWh<br>Rising oil particles + pitch variance – early degradation<br>Window: 05 Aug – 07 Aug</div><div class="rec RED" style="margin-bottom:8px"><b>T-10</b> (Hornsea 1) — RED · RUL 5d · 328 MWh<br>High vibration + elevated gearbox temp + oil debris – gearbox / bearing risk<br>Window: ASAP / next weather window (01 Aug)</div><div class="rec AMBER" style="margin-bottom:8px"><b>T-22</b> (Hornsea 3) — AMBER · RUL 45d · 58 MWh<br>Rising oil particles + pitch variance – early degradation<br>Window: 01 Aug – 03 Aug</div></div>
+    <span style="font-size:.8rem">5 MWh · £375</span>
+    <div class="tip"><b>T-07 — GREEN</b><br>All systems within normal operating range<br>RUL 237d · £375 · 2.0 tCO₂<br>Site: Hornsea 3</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-16</span>
+    <div class="bar" style="width:4px;background:#22c55e"></div>
+    <span style="font-size:.8rem">5 MWh · £375</span>
+    <div class="tip"><b>T-16 — GREEN</b><br>All systems within normal operating range<br>RUL 341d · £375 · 2.0 tCO₂<br>Site: Hornsea 2</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-18</span>
+    <div class="bar" style="width:4px;background:#22c55e"></div>
+    <span style="font-size:.8rem">3 MWh · £225</span>
+    <div class="tip"><b>T-18 — GREEN</b><br>All systems within normal operating range<br>RUL 380d · £225 · 1.2 tCO₂<br>Site: West of Duddon Sands</div>
+    </div><div class="bar-row">
+    <span style="width:48px;font-size:.8rem">T-03</span>
+    <div class="bar" style="width:4px;background:#22c55e"></div>
+    <span style="font-size:.8rem">1 MWh · £75</span>
+    <div class="tip"><b>T-03 — GREEN</b><br>All systems within normal operating range<br>RUL 495d · £75 · 0.4 tCO₂<br>Site: West of Duddon Sands</div>
+    </div></div><div id="alerts" class="section"><h2>Intelligent Alert Centre</h2><div class="rec AMBER" style="margin-bottom:8px">
+    <b>T-01</b> (Hornsea 2) — AMBER · RUL 39d<br>
+    Rising oil particles + pitch variance – early degradation<br>
+    Risk: 93 MWh · £6,975 · 37.2 tCO₂<br>
+    Window: 02 Aug – 04 Aug<br>
+    <button class="btn" style="margin-top:6px" onclick="genWO('Hornsea 2','T-01')">Generate Work Order</button>
+    </div><div class="rec AMBER" style="margin-bottom:8px">
+    <b>T-05</b> (Hornsea 1) — AMBER · RUL 53d<br>
+    Rising oil particles + pitch variance – early degradation<br>
+    Risk: 105 MWh · £7,875 · 42.0 tCO₂<br>
+    Window: 07 Aug – 09 Aug<br>
+    <button class="btn" style="margin-top:6px" onclick="genWO('Hornsea 1','T-05')">Generate Work Order</button>
+    </div><div class="rec RED" style="margin-bottom:8px">
+    <b>T-10</b> (Hornsea 1) — RED · RUL 7d<br>
+    High vibration + elevated gearbox temp + oil debris – gearbox / bearing risk<br>
+    Risk: 289 MWh · £21,675 · 115.6 tCO₂<br>
+    Window: ASAP / next weather window (30 Jul)<br>
+    <button class="btn" style="margin-top:6px" onclick="genWO('Hornsea 1','T-10')">Generate Work Order</button>
+    </div><div class="rec AMBER" style="margin-bottom:8px">
+    <b>T-22</b> (Hornsea 3) — AMBER · RUL 39d<br>
+    Rising oil particles + pitch variance – early degradation<br>
+    Risk: 96 MWh · £7,200 · 38.4 tCO₂<br>
+    Window: 04 Aug – 06 Aug<br>
+    <button class="btn" style="margin-top:6px" onclick="genWO('Hornsea 3','T-22')">Generate Work Order</button>
+    </div></div>
 <div class="toast" id="toast"></div>
 <script>
 function show(id, btn){
@@ -438,21 +581,25 @@ function show(id, btn){
   document.getElementById(id).classList.add("on");
   document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
   if(btn) btn.classList.add("active");
+  window.scrollTo(0,0);
 }
 function openT(id){
   show("detail", document.querySelectorAll(".nav button")[3]);
   document.querySelectorAll(".detail").forEach(d => d.classList.remove("on"));
   const el = document.getElementById("d-"+id);
-  if(el){ el.classList.add("on"); el.scrollIntoView({behavior:"smooth"}); }
+  if(el){ el.classList.add("on"); setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),50); }
 }
-function installPart(tid, pk, name, pn, site){
+function installPart(tid, name, pn, site){
   const toast = document.getElementById("toast");
   toast.innerHTML = "✅ <b>"+name+"</b> (PN "+pn+") marked INSTALLED on "+tid+"<br>→ Purchase Order created: replenish 1× "+pn+" to <b>"+site+"</b> stores";
   toast.style.display = "block";
-  const btn = event.target;
-  btn.textContent = "Installed – PO raised";
-  btn.disabled = true;
-  btn.style.opacity = "0.6";
+  if(event && event.target){ event.target.textContent = "Installed – PO raised"; event.target.disabled = true; }
+  setTimeout(() => { toast.style.display = "none"; }, 4500);
+}
+function genWO(site, turbines){
+  const toast = document.getElementById("toast");
+  toast.innerHTML = "📋 <b>Work Order generated</b><br>Site: "+site+"<br>Turbines: "+turbines+"<br>Exported as mock payload ready for SAP / Maximo / IFS<br>Status: Draft – awaiting planner approval";
+  toast.style.display = "block";
   setTimeout(() => { toast.style.display = "none"; }, 5000);
 }
 </script></body></html>
