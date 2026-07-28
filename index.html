@@ -140,6 +140,20 @@ li.PASS{background:#14532d33} li.CONCERN{background:#78350f33} li.IMMEDIATE{back
     <div class="card">
       <h2>Farm Map (GPS layout) – hover for status · click for full detail</h2>
       <div class="map-box">
+        <!-- Exact routes: SVG so lines run from ship centre to turbine -->
+        <svg style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:4" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <!-- ① RED: Alba (30,28) → H08 (22,35) -->
+          <line x1="30" y1="28" x2="22" y2="35" stroke="#ef4444" stroke-width="0.7" stroke-linecap="round"/>
+          <!-- ② AMBER: Alba (30,28) → H03 (36,12) -->
+          <line x1="30" y1="28" x2="36" y2="12" stroke="#f59e0b" stroke-width="0.55" stroke-linecap="round"/>
+          <!-- ② AMBER: Havelok (68,48) → H11 (64,35) -->
+          <line x1="68" y1="48" x2="64" y2="35" stroke="#f59e0b" stroke-width="0.55" stroke-linecap="round"/>
+        </svg>
+
+        <div style="position:absolute;left:18%;top:30%;font-size:10px;color:#fecaca;font-weight:800;background:#7f1d1dee;padding:2px 6px;border-radius:4px;z-index:8">① RED Alba→H08</div>
+        <div style="position:absolute;left:34%;top:14%;font-size:9px;color:#fde68a;font-weight:700;background:#78350fee;padding:2px 5px;border-radius:4px;z-index:8">② AMBER Alba→H03</div>
+        <div style="position:absolute;left:58%;top:40%;font-size:9px;color:#fde68a;font-weight:700;background:#78350fee;padding:2px 5px;border-radius:4px;z-index:8">② AMBER Havelok→H11</div>
+
         <div class="turb GREEN" style="left:8%;top:12%" onclick="openT('H01')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H01</div><div class="tip">H01 · GREEN · 53.9400°N 1.6500°E · RUL 320d</div></div>
         <div class="turb GREEN" style="left:22%;top:12%" onclick="openT('H02')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H02</div><div class="tip">H02 · GREEN · 53.9400°N 1.6700°E · RUL 410d</div></div>
         <div class="turb AMBER" style="left:36%;top:12%" onclick="openT('H03')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H03</div><div class="tip">H03 · AMBER · Rising oil + pitch · RUL 42d · Alba 3.4 km</div></div>
@@ -169,21 +183,11 @@ li.PASS{background:#14532d33} li.CONCERN{background:#78350f33} li.IMMEDIATE{back
         <div class="ves" style="left:68%;top:48%"><div class="b">🚢</div><div class="n">Havelok</div><div class="tip">ESVAGT Havelok (SOV) · Safe ~30 h · Parts: Bearing Kit, Pitch Filter, Oil Filter</div></div>
         <div class="ves" style="left:16%;top:48%"><div class="b">🚢</div><div class="n">Froude</div><div class="tip">ESVAGT Froude (CTV) · Marginal · Next safe window ~48 h</div></div>
         <div class="ves" style="left:55%;top:75%"><div class="b">🚢</div><div class="n">Mistral</div><div class="tip">Edda Mistral (SOV) · Safe ~30+ h · Full parts set</div></div>
-        <!-- Full courses from vessels to problem turbines -->
-        <!-- Alba (30%,28%) → H08 (22%,35%) -->
-        <div class="route" style="left:30%;top:28%;width:95px;transform:rotate(25deg)" title="Alba → H08"></div>
-        <!-- Alba (30%,28%) → H03 (36%,12%) -->
-        <div class="route" style="left:30%;top:28%;width:110px;transform:rotate(-35deg)" title="Alba → H03"></div>
-        <!-- Havelok (68%,48%) → H11 (64%,35%) -->
-        <div class="route" style="left:68%;top:48%;width:85px;transform:rotate(-100deg)" title="Havelok → H11"></div>
-        <!-- Route labels -->
-        <div style="position:absolute;left:24%;top:30%;font-size:9px;color:#fbbf24;font-weight:700;background:#0f172acc;padding:1px 4px;border-radius:3px;z-index:7">① PRIORITY Alba→H08</div>
-        <div style="position:absolute;left:32%;top:18%;font-size:9px;color:#fbbf24;font-weight:700;background:#0f172acc;padding:1px 4px;border-radius:3px;z-index:7">② ASAP Alba→H03</div>
-        <div style="position:absolute;left:62%;top:40%;font-size:9px;color:#fbbf24;font-weight:700;background:#0f172acc;padding:1px 4px;border-radius:3px;z-index:7">② ASAP Havelok→H11</div>
+
+
       </div>
-      <p style="font-size:.8rem;color:var(--mut);margin-top:8px"><b>Priority:</b> RED first (H08) → AMBER ASAP (H03, H11) → GREEN routine. 
-Yellow lines = recommended course from nearest vessel with parts. 
-Fix time depends on weather window + parts on board. Hover turbine for status & safe ETA.</p>
+      <p style="font-size:.8rem;color:var(--mut);margin-top:8px"><b>Priority:</b> <span style="color:#fca5a5">① RED</span> H08 ← Alba &nbsp;|&nbsp; <span style="color:#fde68a">② AMBER</span> H03 ← Alba, H11 ← Havelok &nbsp;|&nbsp; GREEN = monitor.
+<br><b>Why not Froude for H08?</b> Closest boat but missing Oil Filter + Bearing Kit + CTV weather marginal → Alba assigned instead. Operator can see this immediately and decide.</p>
     </div>
   </div>
 
@@ -236,8 +240,10 @@ Fix time depends on weather window + parts on board. Hover turbine for status & 
       <b>Remaining safe window:</b> ~18 hours &nbsp;|&nbsp; <b>Next full safe window after limit:</b> in 42 hours<br>
       Parts on board: Oil Filter (GF-8842-A), Gear Oil 200L, Hydraulic Filter<br>
       <b>① PRIORITY:</b> H08 (RED) – 2.1 km – weather-safe ETA <b>~6 min</b><br>
-      Estimated back online: <b>within 4–6 hours</b> if parts fit & weather holds (window ~18 h remaining)<br>
-      <b>② ASAP:</b> H03 (AMBER) can be grouped on same trip while window open
+      Why Alba (not Froude): Froude is closer but <b>missing Oil Filter + Bearing Kit</b> and CTV weather marginal<br>
+      Alba has Oil Filter + Gear Oil on board · Bearing Kit available from Havelok/Mistral if needed<br>
+      Estimated back online: <b>4–6 hours</b> (weather window ~18 h remaining)<br>
+      <b>② ASAP:</b> H03 (AMBER) can be grouped on same trip
     </div>
     <div class="card op-g">
       <strong>ESVAGT Havelok</strong> (SOV – Advanced Gangway)<br>
@@ -336,7 +342,9 @@ Fix time depends on weather window + parts on board. Hover turbine for status & 
           <strong>Vessel + weather</strong><br>
           <b>ESVAGT Alba</b> · 2.1 km · weather-safe ETA <b>~6 min</b><br>
           <span class="badge GREEN">Safe window ~18 h remaining</span><br>
-          Parts on board: Oil Filter, Gear Oil (Bearing Kit via transfer if needed)<br>Estimated back online: <b>4–6 hours</b> after arrival (subject to weather window ~18 h & part fit)<br><br>
+          Parts on board: Oil Filter, Gear Oil (Bearing Kit via transfer if needed)<br>
+          <b>Why not Froude?</b> Closer but missing Oil Filter + Bearing Kit + CTV weather marginal<br>
+          Estimated back online: <b>4–6 hours</b> after arrival<br><br>
           Running hours: Oil 6,420 h (overdue) · Filter 2,100 h<br>
           <button class="btn" onclick="genWO('H08')">Generate Work Order</button>
         </div>
@@ -390,7 +398,8 @@ Fix time depends on weather window + parts on board. Hover turbine for status & 
     <div class="card">
       <span class="badge RED">RED</span> <b>H08</b> — Gearbox / bearing risk<br>
       380 MWh · £28,500 · 152 tCO₂<br>
-      Nearest vessel: ESVAGT Alba · 2.1 km · weather-safe ETA <b>~6 min</b> · <span class="badge GREEN">Window ~18 h</span> · Parts on board<br>
+      Assigned: ESVAGT Alba · 2.1 km · safe ETA <b>~6 min</b> · <span class="badge GREEN">Window ~18 h</span> · Parts on board<br>
+      <small>Froude closer but NOT sent: missing Oil Filter + Bearing Kit + CTV weather marginal</small><br>
       <button class="btn" onclick="openT('H08')">Open Detail</button>
       <button class="btn btn-green" onclick="genWO('H08')">Generate Work Order</button>
     </div>
