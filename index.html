@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hornsea Predictive Operations System – Full</title>
+<title>Hornsea Predictive Operations System – Final</title>
 <style>
 :root{--g:#16a34a;--a:#d97706;--r:#dc2626;--bg:#0b1220;--card:#141c2e;--text:#e2e8f0;--mut:#94a3b8;--blue:#2563eb;--border:#1e293b}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.45}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.45}
 .topbar{background:#0f172a;border-bottom:1px solid var(--border);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
-.topbar h1{font-size:1.15rem;font-weight:700}.topbar .sub{font-size:.75rem;color:var(--mut)}
+.topbar h1{font-size:1.15rem;font-weight:700}.sub{font-size:.75rem;color:var(--mut)}
 .metrics{display:flex;gap:8px;flex-wrap:wrap}
-.metric{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;text-align:center;min-width:70px}
+.metric{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;text-align:center;min-width:68px}
 .metric .n{font-size:1.1rem;font-weight:700}.metric .l{font-size:.65rem;color:var(--mut)}
 .nav{display:flex;gap:4px;flex-wrap:wrap;padding:8px 12px;background:#0f172a;border-bottom:1px solid var(--border)}
 .nav button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:6px;font-weight:600;font-size:.82rem;cursor:pointer;min-height:38px}
@@ -21,6 +21,7 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
 .card h2{font-size:1rem;margin-bottom:8px}
 .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:600}
 .badge.GREEN{background:#14532d;color:#86efac}.badge.AMBER{background:#78350f;color:#fcd34d}.badge.RED{background:#7f1d1d;color:#fca5a5}
+.badge.STOCK{background:#164e63;color:#a5f3fc}.badge.FLY{background:#1e3a5f;color:#93c5fd}
 .btn{background:var(--blue);color:#fff;border:none;padding:9px 14px;border-radius:6px;font-weight:600;font-size:.84rem;cursor:pointer;min-height:38px;margin:2px}
 .btn:hover{filter:brightness(1.1)}.btn-green{background:#15803d}.btn-amber{background:#b45309}
 .section{display:none}.section.on{display:block}
@@ -29,23 +30,15 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);c
 .turb .ico{width:28px;height:32px;margin:0 auto;display:block}
 .turb .ico svg{width:28px;height:32px;display:block;filter:drop-shadow(0 1px 3px #0009)}
 .turb .lbl{font-size:9px;font-weight:700;background:#0f172acc;padding:1px 4px;border-radius:3px;display:inline-block;margin-top:1px}
-.turb.GREEN .ico svg{fill:var(--g);stroke:var(--g)}
-.turb.AMBER .ico svg{fill:var(--a);stroke:var(--a)}
-.turb.RED .ico svg{fill:var(--r);stroke:var(--r)}
-.turb.AMBER .lbl,.turb.RED .lbl{font-weight:800}
-.turb:hover{transform:translate(-50%,-70%) scale(1.18);z-index:10}
-.turb.RED{z-index:6}.turb.AMBER{z-index:5}
-
-
-
-
-
+.turb.GREEN .ico svg{fill:var(--g);stroke:var(--g)}.turb.AMBER .ico svg{fill:var(--a);stroke:var(--a)}.turb.RED .ico svg{fill:var(--r);stroke:var(--r)}
+.turb:hover{transform:translate(-50%,-70%) scale(1.15);z-index:10}
+.turb .tip{display:none;position:absolute;left:50%;top:110%;transform:translateX(-50%);padding:8px 12px;border-radius:8px;font-size:.8rem;font-weight:600;white-space:nowrap;z-index:50;box-shadow:0 4px 16px #000a;pointer-events:none;border:2px solid #475569;background:#1e293b;color:#e2e8f0}
 .turb:hover .tip{display:block}
+.turb.GREEN .tip{border-color:#16a34a;background:#14532d;color:#86efac}
+.turb.AMBER .tip{border-color:#d97706;background:#78350f;color:#fcd34d}
+.turb.RED .tip{border-color:#dc2626;background:#7f1d1d;color:#fca5a5}
 .ves{position:absolute;transform:translate(-50%,-50%);z-index:8;text-align:center}
 .ves .b{font-size:18px}.ves .n{font-size:8px;background:#1e3a5fcc;padding:1px 4px;border-radius:3px;white-space:nowrap}
-.ves .tip{display:none;position:absolute;left:50%;top:105%;bottom:auto;transform:translateX(-50%);background:#1e293b;border:1px solid #475569;padding:6px 10px;border-radius:6px;font-size:.75rem;white-space:nowrap;z-index:30;box-shadow:0 4px 12px #000a;pointer-events:none}
-.ves:hover .tip{display:block}
-.route{position:absolute;height:0;border-top:3px solid #fbbf24;z-index:4;transform-origin:left center;pointer-events:none;opacity:0.95;box-shadow:0 0 6px #fbbf2488}
 .wx{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .wx span{background:#0f172a;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.75rem}
 table{width:100%;border-collapse:collapse;font-size:.78rem}
@@ -53,50 +46,24 @@ th,td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:left}
 th{color:var(--mut);font-weight:600}
 .grid2{display:grid;gap:12px}@media(min-width:720px){.grid2{grid-template-columns:1.3fr 1fr}}
 .toast{position:fixed;bottom:16px;left:12px;right:12px;max-width:400px;margin:auto;background:#14532d;color:#86efac;padding:12px 14px;border-radius:8px;display:none;z-index:99;font-size:.88rem;box-shadow:0 4px 16px #0008}
-.op-g{border-left:3px solid var(--g)}.op-a{border-left:3px solid var(--a)}.op-r{border-left:3px solid var(--r)}
+.op-g{border-left:3px solid var(--g)}.op-a{border-left:3px solid var(--a)}
 .legend{font-size:.75rem;color:var(--mut);margin:6px 0;display:flex;gap:12px;flex-wrap:wrap}
 .board{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin:10px 0}
 .tcard{background:var(--card);border:3px solid transparent;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer}
 .tcard.GREEN{border-color:var(--g)}.tcard.AMBER{border-color:var(--a)}.tcard.RED{border-color:var(--r)}
 .tcard:hover{transform:translateY(-2px)}
-.bar-row{display:flex;align-items:center;gap:8px;margin:4px 0;position:relative}
-.bar{height:18px;border-radius:4px;min-width:4px}
-.bar-row .tip{display:none;position:absolute;left:60px;top:22px;background:#1e293b;border:1px solid #475569;padding:8px 10px;border-radius:6px;font-size:.78rem;z-index:10;width:260px}
-.bar-row:hover .tip{display:block}
-ul{list-style:none} li{padding:6px 8px;margin:3px 0;border-radius:5px;font-size:.85rem}
-li.PASS{background:#14532d33} li.CONCERN{background:#78350f33} li.IMMEDIATE{background:#7f1d1d44}
-
-.turb .tip {
-  display: none;
-  position: absolute;
-  left: 50%;
-  top: 110%;
-  transform: translateX(-50%);
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-  z-index: 50;
-  box-shadow: 0 4px 16px #000a;
-  pointer-events: none;
-  line-height: 1.35;
-  border: 2px solid #475569;
-  background: #1e293b;
-  color: #e2e8f0;
-}
-.turb:hover .tip { display: block; }
-.turb.GREEN .tip { border-color: #16a34a; background: #14532d; color: #86efac; }
-.turb.AMBER .tip { border-color: #d97706; background: #78350f; color: #fcd34d; }
-.turb.RED .tip { border-color: #dc2626; background: #7f1d1d; color: #fca5a5; }
-
+.bar{height:18px;border-radius:4px;min-width:4px;display:inline-block}
+.part-row{background:#0f1a2e;border-radius:8px;padding:10px 12px;margin:6px 0;border-left:3px solid #3b82f6;font-size:.85rem}
+ul{list-style:none}li{padding:6px 8px;margin:3px 0;border-radius:5px;font-size:.85rem}
+li.PASS{background:#14532d33}li.CONCERN{background:#78350f33}li.IMMEDIATE{background:#7f1d1d44}
+@media(max-width:600px){.map-box{height:360px}.turb .ico svg{width:22px;height:26px}.nav button{padding:7px 10px;font-size:.78rem}.metric{min-width:56px}}
 </style>
 </head>
 <body>
 <div class="topbar">
   <div>
     <h1>Hornsea Predictive Operations System</h1>
-    <div class="sub">Full SCADA + Predictive Maintenance + Weather Windows + Vessel Routing + Spares + Financial Risk</div>
+    <div class="sub">Final · Map · Weather · Vessels · Maintenance · Spares (Base + Flight) · Financial Risk</div>
   </div>
   <div class="metrics">
     <div class="metric"><div class="n">24</div><div class="l">Turbines</div></div>
@@ -119,11 +86,11 @@ li.PASS{background:#14532d33} li.CONCERN{background:#78350f33} li.IMMEDIATE{back
 </div>
 <div class="main">
   <div class="legend">
-    <span>🟢 Healthy / Safe</span><span>🟠 Concern / Marginal</span><span>🔴 Immediate / Limited</span><span>🚢 Vessel</span>
+    <span>🟢 Healthy</span><span>🟠 Amber</span><span>🔴 Red</span><span>🚢 Vessel</span>
   </div>
 
   <div class="card" style="margin-bottom:10px">
-    <strong>Hornsea area – Wave & Wind forecast</strong>
+    <strong>Hornsea – Wave & Wind forecast</strong>
     <div class="wx">
       <span><b>Now</b> 2.1 m · 28 kn</span>
       <span><b>+6h</b> 2.4 m · 32 kn</span>
@@ -132,286 +99,270 @@ li.PASS{background:#14532d33} li.CONCERN{background:#78350f33} li.IMMEDIATE{back
       <span><b>+36h</b> 3.6 m · 41 kn</span>
       <span><b>+48h</b> 2.0 m · 26 kn</span>
     </div>
-    <div style="font-size:.72rem;color:var(--mut);margin-top:4px">Limits: CTV ≤2.0 m · SOV Walk-to-Work ≤3.0 m · Advanced Gangway ≤4.0 m · Station-keeping ≤6 m · Wind 40–50 kn</div>
+    <div style="font-size:.72rem;color:var(--mut);margin-top:4px">Limits: CTV ≤2.0 m · SOV W2W ≤3.0 m · Advanced ≤4.0 m · Station-keeping ≤6 m · Wind 40–50 kn</div>
   </div>
 
-  <!-- ========== FARM MAP ========== -->
+  <!-- ========== MAP ========== -->
   <div id="map" class="section on">
     <div class="card">
-      <h2>Farm Map (GPS layout) – hover for status · click for full detail</h2>
+      <h2>Farm Map – hover status · click detail</h2>
       <div class="map-box">
-        <!-- Exact routes: SVG so lines run from ship centre to turbine -->
-        <svg style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:4" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <!-- ① RED: Alba (30,28) → H08 (22,35) -->
+        <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4" viewBox="0 0 100 100" preserveAspectRatio="none">
           <line x1="30" y1="28" x2="22" y2="35" stroke="#ef4444" stroke-width="0.7" stroke-linecap="round"/>
-          <!-- ② AMBER: Alba (30,28) → H03 (36,12) -->
           <line x1="30" y1="28" x2="36" y2="12" stroke="#f59e0b" stroke-width="0.55" stroke-linecap="round"/>
-          <!-- ② AMBER: Havelok (68,48) → H11 (64,35) -->
           <line x1="68" y1="48" x2="64" y2="35" stroke="#f59e0b" stroke-width="0.55" stroke-linecap="round"/>
         </svg>
-
-        <div style="position:absolute;left:18%;top:30%;font-size:10px;color:#fecaca;font-weight:800;background:#7f1d1dee;padding:2px 6px;border-radius:4px;z-index:8">① RED Alba→H08</div>
+        <div style="position:absolute;left:17%;top:30%;font-size:10px;color:#fecaca;font-weight:800;background:#7f1d1dee;padding:2px 6px;border-radius:4px;z-index:8">① RED Alba→H08</div>
         <div style="position:absolute;left:34%;top:14%;font-size:9px;color:#fde68a;font-weight:700;background:#78350fee;padding:2px 5px;border-radius:4px;z-index:8">② AMBER Alba→H03</div>
         <div style="position:absolute;left:58%;top:40%;font-size:9px;color:#fde68a;font-weight:700;background:#78350fee;padding:2px 5px;border-radius:4px;z-index:8">② AMBER Havelok→H11</div>
-
-        <div class="turb GREEN" style="left:8%;top:12%" onclick="openT('H01')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H01</div><div class="tip">H01 · GREEN · 53.9400°N 1.6500°E · RUL 320d</div></div>
-        <div class="turb GREEN" style="left:22%;top:12%" onclick="openT('H02')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H02</div><div class="tip">H02 · GREEN · 53.9400°N 1.6700°E · RUL 410d</div></div>
-        <div class="turb AMBER" style="left:36%;top:12%" onclick="openT('H03')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H03</div><div class="tip">H03 · AMBER · Rising oil + pitch · RUL 42d · Alba 3.4 km</div></div>
-        <div class="turb GREEN" style="left:50%;top:12%" onclick="openT('H04')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H04</div><div class="tip">H04 · GREEN · RUL 280d</div></div>
-        <div class="turb GREEN" style="left:64%;top:12%" onclick="openT('H05')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H05</div><div class="tip">H05 · GREEN · RUL 355d</div></div>
-        <div class="turb GREEN" style="left:78%;top:12%" onclick="openT('H06')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H06</div><div class="tip">H06 · GREEN · RUL 490d</div></div>
-        <div class="turb GREEN" style="left:8%;top:35%" onclick="openT('H07')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H07</div><div class="tip">H07 · GREEN · RUL 265d</div></div>
-        <div class="turb RED" style="left:22%;top:35%" onclick="openT('H08')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H08</div><div class="tip">H08 · RED · Gearbox/bearing risk · RUL 7d · Alba 2.1 km · Safe ETA 6 min</div></div>
-        <div class="turb GREEN" style="left:36%;top:35%" onclick="openT('H09')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H09</div><div class="tip">H09 · GREEN · RUL 380d</div></div>
-        <div class="turb GREEN" style="left:50%;top:35%" onclick="openT('H10')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H10</div><div class="tip">H10 · GREEN · RUL 440d</div></div>
-        <div class="turb AMBER" style="left:64%;top:35%" onclick="openT('H11')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H11</div><div class="tip">H11 · AMBER · Oil + pitch · RUL 35d · Havelok 1.8 km</div></div>
-        <div class="turb GREEN" style="left:78%;top:35%" onclick="openT('H12')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H12</div><div class="tip">H12 · GREEN · RUL 310d</div></div>
-        <div class="turb GREEN" style="left:8%;top:58%" onclick="openT('H13')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H13</div><div class="tip">H13 · GREEN · RUL 295d</div></div>
-        <div class="turb GREEN" style="left:22%;top:58%" onclick="openT('H14')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H14</div><div class="tip">H14 · GREEN · RUL 520d</div></div>
-        <div class="turb GREEN" style="left:36%;top:58%" onclick="openT('H15')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H15</div><div class="tip">H15 · GREEN · RUL 270d</div></div>
-        <div class="turb GREEN" style="left:50%;top:58%" onclick="openT('H16')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H16</div><div class="tip">H16 · GREEN · RUL 400d</div></div>
-        <div class="turb GREEN" style="left:64%;top:58%" onclick="openT('H17')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H17</div><div class="tip">H17 · GREEN · RUL 360d</div></div>
-        <div class="turb GREEN" style="left:78%;top:58%" onclick="openT('H18')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H18</div><div class="tip">H18 · GREEN · RUL 480d</div></div>
-        <div class="turb GREEN" style="left:8%;top:80%" onclick="openT('H19')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H19</div><div class="tip">H19 · GREEN · RUL 340d</div></div>
-        <div class="turb GREEN" style="left:22%;top:80%" onclick="openT('H20')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H20</div><div class="tip">H20 · GREEN · RUL 290d</div></div>
-        <div class="turb GREEN" style="left:36%;top:80%" onclick="openT('H21')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H21</div><div class="tip">H21 · GREEN · RUL 450d</div></div>
-        <div class="turb GREEN" style="left:50%;top:80%" onclick="openT('H22')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H22</div><div class="tip">H22 · GREEN · RUL 330d</div></div>
-        <div class="turb GREEN" style="left:64%;top:80%" onclick="openT('H23')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H23</div><div class="tip">H23 · GREEN · RUL 510d</div></div>
-        <div class="turb GREEN" style="left:78%;top:80%" onclick="openT('H24')"><div class="ico"><svg viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5" stroke-width="0"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H24</div><div class="tip">H24 · GREEN · RUL 375d</div></div>
-        <!-- Vessels with hover -->
-        <div class="ves" style="left:30%;top:28%"><div class="b">🚢</div><div class="n">Alba</div><div class="tip">ESVAGT Alba (SOV) · Safe ~18 h · Parts: Oil Filter, Gear Oil, Hydraulic Filter</div></div>
-        <div class="ves" style="left:68%;top:48%"><div class="b">🚢</div><div class="n">Havelok</div><div class="tip">ESVAGT Havelok (SOV) · Safe ~30 h · Parts: Bearing Kit, Pitch Filter, Oil Filter</div></div>
-        <div class="ves" style="left:16%;top:48%"><div class="b">🚢</div><div class="n">Froude</div><div class="tip">ESVAGT Froude (CTV) · Marginal · Next safe window ~48 h</div></div>
-        <div class="ves" style="left:55%;top:75%"><div class="b">🚢</div><div class="n">Mistral</div><div class="tip">Edda Mistral (SOV) · Safe ~30+ h · Full parts set</div></div>
-
-
+        <!-- Turbines H01-H24 -->
+        <div class="turb GREEN" style="left:8%;top:12%" onclick="openT('H01')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H01</div><div class="tip">H01 · GREEN · RUL 320d</div></div>
+        <div class="turb GREEN" style="left:22%;top:12%" onclick="openT('H02')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H02</div><div class="tip">H02 · GREEN · RUL 410d</div></div>
+        <div class="turb AMBER" style="left:36%;top:12%" onclick="openT('H03')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H03</div><div class="tip">H03 · AMBER · RUL 42d · Alba 3.4 km</div></div>
+        <div class="turb GREEN" style="left:50%;top:12%" onclick="openT('H04')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H04</div><div class="tip">H04 · GREEN · RUL 280d</div></div>
+        <div class="turb GREEN" style="left:64%;top:12%" onclick="openT('H05')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H05</div><div class="tip">H05 · GREEN · RUL 355d</div></div>
+        <div class="turb GREEN" style="left:78%;top:12%" onclick="openT('H06')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H06</div><div class="tip">H06 · GREEN · RUL 490d</div></div>
+        <div class="turb GREEN" style="left:8%;top:35%" onclick="openT('H07')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H07</div><div class="tip">H07 · GREEN · RUL 265d</div></div>
+        <div class="turb RED" style="left:22%;top:35%" onclick="openT('H08')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H08</div><div class="tip">H08 · RED · Gearbox/bearing · RUL 7d · Alba ETA 6 min</div></div>
+        <div class="turb GREEN" style="left:36%;top:35%" onclick="openT('H09')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H09</div><div class="tip">H09 · GREEN · RUL 380d</div></div>
+        <div class="turb GREEN" style="left:50%;top:35%" onclick="openT('H10')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H10</div><div class="tip">H10 · GREEN · RUL 440d</div></div>
+        <div class="turb AMBER" style="left:64%;top:35%" onclick="openT('H11')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H11</div><div class="tip">H11 · AMBER · RUL 35d · Havelok 1.8 km</div></div>
+        <div class="turb GREEN" style="left:78%;top:35%" onclick="openT('H12')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H12</div><div class="tip">H12 · GREEN · RUL 310d</div></div>
+        <div class="turb GREEN" style="left:8%;top:58%" onclick="openT('H13')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H13</div><div class="tip">H13 · GREEN · RUL 295d</div></div>
+        <div class="turb GREEN" style="left:22%;top:58%" onclick="openT('H14')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H14</div><div class="tip">H14 · GREEN · RUL 520d</div></div>
+        <div class="turb GREEN" style="left:36%;top:58%" onclick="openT('H15')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H15</div><div class="tip">H15 · GREEN · RUL 270d</div></div>
+        <div class="turb GREEN" style="left:50%;top:58%" onclick="openT('H16')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H16</div><div class="tip">H16 · GREEN · RUL 400d</div></div>
+        <div class="turb GREEN" style="left:64%;top:58%" onclick="openT('H17')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H17</div><div class="tip">H17 · GREEN · RUL 360d</div></div>
+        <div class="turb GREEN" style="left:78%;top:58%" onclick="openT('H18')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H18</div><div class="tip">H18 · GREEN · RUL 480d</div></div>
+        <div class="turb GREEN" style="left:8%;top:80%" onclick="openT('H19')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H19</div><div class="tip">H19 · GREEN · RUL 340d</div></div>
+        <div class="turb GREEN" style="left:22%;top:80%" onclick="openT('H20')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H20</div><div class="tip">H20 · GREEN · RUL 290d</div></div>
+        <div class="turb GREEN" style="left:36%;top:80%" onclick="openT('H21')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H21</div><div class="tip">H21 · GREEN · RUL 450d</div></div>
+        <div class="turb GREEN" style="left:50%;top:80%" onclick="openT('H22')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H22</div><div class="tip">H22 · GREEN · RUL 330d</div></div>
+        <div class="turb GREEN" style="left:64%;top:80%" onclick="openT('H23')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H23</div><div class="tip">H23 · GREEN · RUL 510d</div></div>
+        <div class="turb GREEN" style="left:78%;top:80%" onclick="openT('H24')"><div class="ico"><svg viewBox="0 0 40 48"><path d="M20 28 L20 46 M16 46 L24 46" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3.5"/><path d="M20 26 L20 8 M20 26 L8 18 M20 26 L32 18" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div><div class="lbl">H24</div><div class="tip">H24 · GREEN · RUL 375d</div></div>
+        <div class="ves" style="left:30%;top:28%"><div class="b">🚢</div><div class="n">Alba</div></div>
+        <div class="ves" style="left:68%;top:48%"><div class="b">🚢</div><div class="n">Havelok</div></div>
+        <div class="ves" style="left:16%;top:48%"><div class="b">🚢</div><div class="n">Froude</div></div>
+        <div class="ves" style="left:55%;top:75%"><div class="b">🚢</div><div class="n">Mistral</div></div>
       </div>
-      <p style="font-size:.8rem;color:var(--mut);margin-top:8px"><b>Priority:</b> <span style="color:#fca5a5">① RED</span> H08 ← Alba &nbsp;|&nbsp; <span style="color:#fde68a">② AMBER</span> H03 ← Alba, H11 ← Havelok &nbsp;|&nbsp; GREEN = monitor.
-<br><b>Why not Froude for H08?</b> Closest boat but missing Oil Filter + Bearing Kit + CTV weather marginal → Alba assigned instead. Operator can see this immediately and decide.</p>
+      <p style="font-size:.8rem;color:var(--mut);margin-top:8px">
+        <b>Priority:</b> <span style="color:#fca5a5">① RED</span> H08 ← Alba · <span style="color:#fde68a">② AMBER</span> H03 ← Alba, H11 ← Havelok · GREEN = monitor.<br>
+        <b>Why not Froude for H08?</b> Closest but missing Oil Filter + Bearing Kit + CTV weather marginal → Alba assigned.
+      </p>
     </div>
   </div>
 
-  <!-- ========== STATUS BOARD ========== -->
+  <!-- STATUS BOARD -->
   <div id="board" class="section">
     <div class="card">
-      <h2>Status Board – tap any turbine</h2>
+      <h2>Status Board</h2>
       <div class="board">
-        <div class="tcard GREEN" onclick="openT('H01')"><div>🟢</div><div><b>H01</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 320d</div></div>
-        <div class="tcard GREEN" onclick="openT('H02')"><div>🟢</div><div><b>H02</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 410d</div></div>
-        <div class="tcard AMBER" onclick="openT('H03')"><div>🟠</div><div><b>H03</b></div><div style="font-size:.7rem;color:var(--mut)">AMBER · 42d</div></div>
-        <div class="tcard GREEN" onclick="openT('H04')"><div>🟢</div><div><b>H04</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 280d</div></div>
-        <div class="tcard GREEN" onclick="openT('H05')"><div>🟢</div><div><b>H05</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 355d</div></div>
-        <div class="tcard GREEN" onclick="openT('H06')"><div>🟢</div><div><b>H06</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 490d</div></div>
-        <div class="tcard GREEN" onclick="openT('H07')"><div>🟢</div><div><b>H07</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 265d</div></div>
-        <div class="tcard RED" onclick="openT('H08')"><div>🔴</div><div><b>H08</b></div><div style="font-size:.7rem;color:var(--mut)">RED · 7d</div></div>
-        <div class="tcard GREEN" onclick="openT('H09')"><div>🟢</div><div><b>H09</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 380d</div></div>
-        <div class="tcard GREEN" onclick="openT('H10')"><div>🟢</div><div><b>H10</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 440d</div></div>
-        <div class="tcard AMBER" onclick="openT('H11')"><div>🟠</div><div><b>H11</b></div><div style="font-size:.7rem;color:var(--mut)">AMBER · 35d</div></div>
-        <div class="tcard GREEN" onclick="openT('H12')"><div>🟢</div><div><b>H12</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 310d</div></div>
-        <div class="tcard GREEN" onclick="openT('H13')"><div>🟢</div><div><b>H13</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 295d</div></div>
-        <div class="tcard GREEN" onclick="openT('H14')"><div>🟢</div><div><b>H14</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 520d</div></div>
-        <div class="tcard GREEN" onclick="openT('H15')"><div>🟢</div><div><b>H15</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 270d</div></div>
-        <div class="tcard GREEN" onclick="openT('H16')"><div>🟢</div><div><b>H16</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 400d</div></div>
-        <div class="tcard GREEN" onclick="openT('H17')"><div>🟢</div><div><b>H17</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 360d</div></div>
-        <div class="tcard GREEN" onclick="openT('H18')"><div>🟢</div><div><b>H18</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 480d</div></div>
-        <div class="tcard GREEN" onclick="openT('H19')"><div>🟢</div><div><b>H19</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 340d</div></div>
-        <div class="tcard GREEN" onclick="openT('H20')"><div>🟢</div><div><b>H20</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 290d</div></div>
-        <div class="tcard GREEN" onclick="openT('H21')"><div>🟢</div><div><b>H21</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 450d</div></div>
-        <div class="tcard GREEN" onclick="openT('H22')"><div>🟢</div><div><b>H22</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 330d</div></div>
-        <div class="tcard GREEN" onclick="openT('H23')"><div>🟢</div><div><b>H23</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 510d</div></div>
-        <div class="tcard GREEN" onclick="openT('H24')"><div>🟢</div><div><b>H24</b></div><div style="font-size:.7rem;color:var(--mut)">GREEN · 375d</div></div>
+        <div class="tcard GREEN" onclick="openT('H01')"><div>🟢</div><b>H01</b><div style="font-size:.7rem;color:var(--mut)">320d</div></div>
+        <div class="tcard GREEN" onclick="openT('H02')"><div>🟢</div><b>H02</b><div style="font-size:.7rem;color:var(--mut)">410d</div></div>
+        <div class="tcard AMBER" onclick="openT('H03')"><div>🟠</div><b>H03</b><div style="font-size:.7rem;color:var(--mut)">42d</div></div>
+        <div class="tcard GREEN" onclick="openT('H04')"><div>🟢</div><b>H04</b><div style="font-size:.7rem;color:var(--mut)">280d</div></div>
+        <div class="tcard GREEN" onclick="openT('H05')"><div>🟢</div><b>H05</b><div style="font-size:.7rem;color:var(--mut)">355d</div></div>
+        <div class="tcard GREEN" onclick="openT('H06')"><div>🟢</div><b>H06</b><div style="font-size:.7rem;color:var(--mut)">490d</div></div>
+        <div class="tcard GREEN" onclick="openT('H07')"><div>🟢</div><b>H07</b><div style="font-size:.7rem;color:var(--mut)">265d</div></div>
+        <div class="tcard RED" onclick="openT('H08')"><div>🔴</div><b>H08</b><div style="font-size:.7rem;color:var(--mut)">7d</div></div>
+        <div class="tcard GREEN" onclick="openT('H09')"><div>🟢</div><b>H09</b><div style="font-size:.7rem;color:var(--mut)">380d</div></div>
+        <div class="tcard GREEN" onclick="openT('H10')"><div>🟢</div><b>H10</b><div style="font-size:.7rem;color:var(--mut)">440d</div></div>
+        <div class="tcard AMBER" onclick="openT('H11')"><div>🟠</div><b>H11</b><div style="font-size:.7rem;color:var(--mut)">35d</div></div>
+        <div class="tcard GREEN" onclick="openT('H12')"><div>🟢</div><b>H12</b><div style="font-size:.7rem;color:var(--mut)">310d</div></div>
+        <div class="tcard GREEN" onclick="openT('H13')"><div>🟢</div><b>H13</b><div style="font-size:.7rem;color:var(--mut)">295d</div></div>
+        <div class="tcard GREEN" onclick="openT('H14')"><div>🟢</div><b>H14</b><div style="font-size:.7rem;color:var(--mut)">520d</div></div>
+        <div class="tcard GREEN" onclick="openT('H15')"><div>🟢</div><b>H15</b><div style="font-size:.7rem;color:var(--mut)">270d</div></div>
+        <div class="tcard GREEN" onclick="openT('H16')"><div>🟢</div><b>H16</b><div style="font-size:.7rem;color:var(--mut)">400d</div></div>
+        <div class="tcard GREEN" onclick="openT('H17')"><div>🟢</div><b>H17</b><div style="font-size:.7rem;color:var(--mut)">360d</div></div>
+        <div class="tcard GREEN" onclick="openT('H18')"><div>🟢</div><b>H18</b><div style="font-size:.7rem;color:var(--mut)">480d</div></div>
+        <div class="tcard GREEN" onclick="openT('H19')"><div>🟢</div><b>H19</b><div style="font-size:.7rem;color:var(--mut)">340d</div></div>
+        <div class="tcard GREEN" onclick="openT('H20')"><div>🟢</div><b>H20</b><div style="font-size:.7rem;color:var(--mut)">290d</div></div>
+        <div class="tcard GREEN" onclick="openT('H21')"><div>🟢</div><b>H21</b><div style="font-size:.7rem;color:var(--mut)">450d</div></div>
+        <div class="tcard GREEN" onclick="openT('H22')"><div>🟢</div><b>H22</b><div style="font-size:.7rem;color:var(--mut)">330d</div></div>
+        <div class="tcard GREEN" onclick="openT('H23')"><div>🟢</div><b>H23</b><div style="font-size:.7rem;color:var(--mut)">510d</div></div>
+        <div class="tcard GREEN" onclick="openT('H24')"><div>🟢</div><b>H24</b><div style="font-size:.7rem;color:var(--mut)">375d</div></div>
       </div>
       <table>
-        <tr><th>Turbine</th><th>GPS</th><th>Status</th><th>RUL</th><th>Risk MWh</th><th>£ Risk</th><th>tCO₂</th><th>Best vessel / Safe ETA</th></tr>
-        <tr><td><b>H08</b></td><td>53.9300 N 1.6700 E</td><td><span class="badge RED">RED</span></td><td>7d</td><td>380</td><td>£28,500</td><td>152</td><td>Alba · 2.1 km · 6 min (safe 18 h)</td></tr>
-        <tr><td><b>H03</b></td><td>53.9400 N 1.6900 E</td><td><span class="badge AMBER">AMBER</span></td><td>42d</td><td>95</td><td>£7,125</td><td>38</td><td>Alba · 3.4 km · 9 min (safe 18 h)</td></tr>
-        <tr><td><b>H11</b></td><td>53.9300 N 1.7300 E</td><td><span class="badge AMBER">AMBER</span></td><td>35d</td><td>80</td><td>£6,000</td><td>32</td><td>Havelok · 1.8 km · 5 min (safe 30 h)</td></tr>
-        <tr><td>H01–H02, H04–H07, H09–H10, H12–H24</td><td>—</td><td><span class="badge GREEN">GREEN</span></td><td>265–520d</td><td>0–16</td><td>£0–1.2k</td><td>0–6</td><td>—</td></tr>
+        <tr><th>Turbine</th><th>GPS</th><th>Status</th><th>RUL</th><th>Risk MWh</th><th>£ Risk</th><th>tCO₂</th><th>Vessel / ETA</th></tr>
+        <tr><td><b>H08</b></td><td>53.9300N 1.6700E</td><td><span class="badge RED">RED</span></td><td>7d</td><td>380</td><td>£28,500</td><td>152</td><td>Alba · 2.1 km · 6 min</td></tr>
+        <tr><td><b>H03</b></td><td>53.9400N 1.6900E</td><td><span class="badge AMBER">AMBER</span></td><td>42d</td><td>95</td><td>£7,125</td><td>38</td><td>Alba · 3.4 km · 9 min</td></tr>
+        <tr><td><b>H11</b></td><td>53.9300N 1.7300E</td><td><span class="badge AMBER">AMBER</span></td><td>35d</td><td>80</td><td>£6,000</td><td>32</td><td>Havelok · 1.8 km · 5 min</td></tr>
       </table>
     </div>
   </div>
 
-  <!-- ========== VESSELS + WEATHER ========== -->
+  <!-- VESSELS + WEATHER -->
   <div id="vessels" class="section">
     <div class="card op-g">
-      <strong>ESVAGT Alba</strong> (SOV – Walk-to-Work / Advanced)<br>
-      <span class="badge GREEN">SAFE TO WORK NOW</span><br>
-      Wave 2.1 m · Wind 28 kn (limit 3.0 m / 50 kn)<br>
-      <b>Remaining safe window:</b> ~18 hours &nbsp;|&nbsp; <b>Next full safe window after limit:</b> in 42 hours<br>
-      Parts on board: Oil Filter (GF-8842-A), Gear Oil 200L, Hydraulic Filter<br>
-      <b>① PRIORITY:</b> H08 (RED) – 2.1 km – weather-safe ETA <b>~6 min</b><br>
-      Why Alba (not Froude): Froude is closer but <b>missing Oil Filter + Bearing Kit</b> and CTV weather marginal<br>
-      Alba has Oil Filter + Gear Oil on board · Bearing Kit available from Havelok/Mistral if needed<br>
-      Estimated back online: <b>4–6 hours</b> (weather window ~18 h remaining)<br>
-      <b>② ASAP:</b> H03 (AMBER) can be grouped on same trip
+      <strong>ESVAGT Alba</strong> (SOV)<br>
+      <span class="badge GREEN">SAFE TO WORK NOW</span> · Window ~18 h remaining<br>
+      Parts on board: Oil Filter, Gear Oil, Hydraulic Filter<br>
+      <b>① PRIORITY H08</b> · 2.1 km · ETA ~6 min · Back online ~4–6 h<br>
+      Why not Froude: closer but missing Oil Filter + Bearing Kit + CTV weather marginal<br>
+      <b>② ASAP H03</b> can share same trip
     </div>
     <div class="card op-g">
-      <strong>ESVAGT Havelok</strong> (SOV – Advanced Gangway)<br>
-      <span class="badge GREEN">SAFE TO WORK NOW</span><br>
-      Remaining safe window: ~30 hours<br>
-      Parts: Bearing Kit (MB-GK-55), Pitch Filter, Oil Filter<br>
-      Priority: <b>H11 (AMBER)</b> – 1.8 km – safe ETA ~5 min
+      <strong>ESVAGT Havelok</strong> (SOV) · Window ~30 h<br>
+      Parts: Bearing Kit, Pitch Filter, Oil Filter · Assigned H11 · 1.8 km · ETA ~5 min
     </div>
     <div class="card op-a">
-      <strong>ESVAGT Froude</strong> (CTV)<br>
-      <span class="badge AMBER">MARGINAL</span> – at CTV wave limit (1.5–2.0 m)<br>
-      Remaining CTV window: 0–2 hours &nbsp;|&nbsp; Next safe CTV window: in ~48 hours<br>
-      Prefer SOV for any transfer in next 48 h
+      <strong>ESVAGT Froude</strong> (CTV) · closest to H08<br>
+      <span class="badge AMBER">MARGINAL</span> · CTV window 0–2 h<br>
+      <b>NOT SENT to H08:</b> missing Oil Filter + Bearing Kit + weather<br>
+      Operator can transfer parts from base flight or from Alba/Mistral
     </div>
     <div class="card op-g">
-      <strong>Edda Mistral</strong> (SOV)<br>
-      <span class="badge GREEN">SAFE TO WORK NOW</span> · Remaining window ~30+ h<br>
-      Parts: Oil Filter, Bearing Kit, Gear Oil, Pitch Filter (full set)
-    </div>
-    <div class="card">
-      <strong>Weather vs vessel type</strong>
-      <table>
-        <tr><th>Type</th><th>Wave limit</th><th>Now</th><th>+24 h</th><th>+48 h</th></tr>
-        <tr><td>CTV</td><td>1.5–2.0 m</td><td><span class="badge AMBER">Marginal</span></td><td><span class="badge RED">Limited</span></td><td><span class="badge GREEN">Open</span></td></tr>
-        <tr><td>SOV W2W</td><td>2.5–3.0 m</td><td><span class="badge GREEN">Open</span></td><td><span class="badge AMBER">Closing</span></td><td><span class="badge GREEN">Open</span></td></tr>
-        <tr><td>SOV Advanced</td><td>3.5–4.0 m</td><td><span class="badge GREEN">Open</span></td><td><span class="badge AMBER">Marginal</span></td><td><span class="badge GREEN">Open</span></td></tr>
-        <tr><td>Station-keeping</td><td>5–6 m+</td><td><span class="badge GREEN">Open</span></td><td><span class="badge GREEN">Open</span></td><td><span class="badge GREEN">Open</span></td></tr>
-      </table>
+      <strong>Edda Mistral</strong> (SOV) · Window ~30+ h · Full parts set on board
     </div>
   </div>
 
-  <!-- ========== MAINTENANCE ========== -->
+  <!-- MAINTENANCE -->
   <div id="schedule" class="section">
     <div class="card">
       <h2>Maintenance schedule & running hours</h2>
       <table>
-        <tr><th>Turbine</th><th>Status</th><th>Hours since oil</th><th>Oil countdown</th><th>Hours since filter</th><th>Filter countdown</th><th>Best vessel / Safe ETA</th></tr>
-        <tr><td><b>H08</b></td><td><span class="badge RED">RED</span></td><td>6,420 h</td><td style="color:var(--r)">OVERDUE</td><td>2,100 h</td><td style="color:var(--r)">12 d</td><td>Alba · 2.1 km · 6 min (safe 18 h)</td></tr>
-        <tr><td><b>H03</b></td><td><span class="badge AMBER">AMBER</span></td><td>4,800 h</td><td style="color:var(--a)">38 d</td><td>1,650 h</td><td style="color:var(--a)">45 d</td><td>Alba · 3.4 km · 9 min</td></tr>
-        <tr><td><b>H11</b></td><td><span class="badge AMBER">AMBER</span></td><td>5,100 h</td><td style="color:var(--a)">29 d</td><td>1,900 h</td><td style="color:var(--a)">32 d</td><td>Havelok · 1.8 km · 5 min</td></tr>
-        <tr><td>All other (H01–H02, H04–H07, H09–H10, H12–H24)</td><td><span class="badge GREEN">GREEN</span></td><td>1.2–4.5k h</td><td style="color:var(--g)">On plan</td><td>—</td><td style="color:var(--g)">On plan</td><td>—</td></tr>
+        <tr><th>Turbine</th><th>Status</th><th>Hours oil</th><th>Oil countdown</th><th>Hours filter</th><th>Filter countdown</th><th>Vessel / ETA</th></tr>
+        <tr><td><b>H08</b></td><td><span class="badge RED">RED</span></td><td>6,420 h</td><td style="color:var(--r)">OVERDUE</td><td>2,100 h</td><td style="color:var(--r)">12 d</td><td>Alba · 6 min</td></tr>
+        <tr><td><b>H03</b></td><td><span class="badge AMBER">AMBER</span></td><td>4,800 h</td><td style="color:var(--a)">38 d</td><td>1,650 h</td><td style="color:var(--a)">45 d</td><td>Alba · 9 min</td></tr>
+        <tr><td><b>H11</b></td><td><span class="badge AMBER">AMBER</span></td><td>5,100 h</td><td style="color:var(--a)">29 d</td><td>1,900 h</td><td style="color:var(--a)">32 d</td><td>Havelok · 5 min</td></tr>
+        <tr><td>All others</td><td><span class="badge GREEN">GREEN</span></td><td>1.2–4.5k h</td><td style="color:var(--g)">On plan</td><td>—</td><td style="color:var(--g)">On plan</td><td>—</td></tr>
       </table>
     </div>
     <div class="card">
-      <strong>Suggested vessel grouping (reduce charter cost)</strong><br>
-      H08 (RED) + H03 (AMBER) → ESVAGT Alba while weather window open (~18 h remaining)<br>
-      H11 (AMBER) → ESVAGT Havelok<br>
-      <button class="btn btn-amber" onclick="genWO('H08+H03')">Generate Combined Work Order (Alba)</button>
+      H08 + H03 → Alba same trip while weather open (~18 h)<br>
+      <button class="btn btn-amber" onclick="genWO('H08+H03')">Generate Combined Work Order</button>
     </div>
   </div>
 
-  <!-- ========== SPARES ========== -->
+  <!-- ========== SPARES (FULL) ========== -->
   <div id="spares" class="section">
     <div class="card">
-      <h2>Spares, stock on vessel & auto-reorder</h2>
-      <p><b>H08 (RED)</b> needs: Gearbox Oil Filter (GF-8842-A), Gear Oil 200L (GO-200L-VG320), Main Bearing Grease Kit (MB-GK-55)<br>
-      Oil Filter + Gear Oil: on Alba &nbsp;|&nbsp; Bearing Kit: on Havelok / Mistral<br>
-      <button class="btn btn-green" onclick="install('H08','Gearbox Oil Filter','GF-8842-A')">Mark Installed → Reorder</button></p>
-      <p style="margin-top:12px"><b>H03 & H11 (AMBER)</b> need: Oil Filter + Hydraulic Filter<br>
-      Available on Alba / Froude / Havelok<br>
-      <button class="btn btn-green" onclick="install('H03','Oil Filter','GF-8842-A')">Mark Installed → Reorder</button></p>
-    </div>
-    <div class="card">
-      <strong>Part locations across vessels</strong><br>
-      Oil Filter (GF-8842-A): Alba, Havelok, Mistral<br>
-      Gear Oil 200L: Alba, Froude, Mistral<br>
-      Hydraulic Filter (HF-2201-B): Alba, Froude<br>
-      Bearing Kit (MB-GK-55): Havelok, Mistral<br>
-      Pitch Filter (PF-1190): Havelok, Mistral
+      <h2>Spares – Base stock, vessel stock & scheduled flights</h2>
+
+      <h3 style="margin:10px 0 6px;font-size:.95rem">Parts required now</h3>
+      <div class="part-row">
+        <b>H08 (RED)</b> needs:<br>
+        • Gearbox Oil Filter <code>GF-8842-A</code> — <span class="badge STOCK">On Alba ×2</span> · Base Grimsby ×14<br>
+        • Gearbox Oil 200L <code>GO-200L-VG320</code> — <span class="badge STOCK">On Alba ×1</span> · Base ×22<br>
+        • Main Bearing Grease Kit <code>MB-GK-55</code> — <span class="badge AMBER">NOT on Alba</span> · On Havelok/Mistral · Base ×8<br>
+        <button class="btn btn-green" onclick="install('H08','Oil Filter','GF-8842-A')">Mark Installed → Reorder to base</button>
+      </div>
+      <div class="part-row">
+        <b>H03 / H11 (AMBER)</b> need: Oil Filter + Hydraulic Filter<br>
+        Available on Alba / Froude / Havelok · Base stock OK<br>
+        <button class="btn btn-green" onclick="install('H03','Oil Filter','GF-8842-A')">Mark Installed → Reorder to base</button>
+      </div>
+
+      <h3 style="margin:14px 0 6px;font-size:.95rem">Base stock (Grimsby / Hornsea stores)</h3>
+      <table>
+        <tr><th>Part</th><th>PN</th><th>Base stock</th><th>On vessels</th><th>Reorder point</th></tr>
+        <tr><td>Gearbox Oil Filter</td><td><code>GF-8842-A</code></td><td><b>14</b></td><td>Alba 2, Havelok 1, Mistral 2</td><td>6</td></tr>
+        <tr><td>Gearbox Oil 200L</td><td><code>GO-200L-VG320</code></td><td><b>22</b></td><td>Alba 1, Froude 1, Mistral 2</td><td>8</td></tr>
+        <tr><td>Hydraulic Filter</td><td><code>HF-2201-B</code></td><td><b>11</b></td><td>Alba 2, Froude 1</td><td>4</td></tr>
+        <tr><td>Main Bearing Grease Kit</td><td><code>MB-GK-55</code></td><td><b>8</b></td><td>Havelok 1, Mistral 1</td><td>3</td></tr>
+        <tr><td>Pitch System Filter</td><td><code>PF-1190</code></td><td><b>16</b></td><td>Havelok 1, Mistral 1</td><td>5</td></tr>
+      </table>
+
+      <h3 style="margin:14px 0 6px;font-size:.95rem">Scheduled flights / crew-change (parts delivery)</h3>
+      <table>
+        <tr><th>Flight / vessel</th><th>From</th><th>To</th><th>ETA</th><th>Can carry parts</th><th>Notes</th></tr>
+        <tr>
+          <td><b>Flight HF-14</b> (helicopter)</td>
+          <td>Grimsby base</td>
+          <td>ESVAGT Alba</td>
+          <td><span class="badge FLY">Today 16:30</span></td>
+          <td>Yes – Bearing Kit MB-GK-55 ×2</td>
+          <td>Use to complete H08 parts before repair</td>
+        </tr>
+        <tr>
+          <td><b>Flight HF-15</b></td>
+          <td>Grimsby base</td>
+          <td>ESVAGT Havelok</td>
+          <td><span class="badge FLY">Tomorrow 09:00</span></td>
+          <td>Yes – general stores</td>
+          <td>Routine top-up</td>
+        </tr>
+        <tr>
+          <td><b>SOV Edda Mistral</b> transfer</td>
+          <td>Mistral</td>
+          <td>Alba (if needed)</td>
+          <td>Weather window ~18 h</td>
+          <td>Bearing Kit on board</td>
+          <td>Alternative if flight delayed</td>
+        </tr>
+      </table>
+      <p style="font-size:.85rem;color:var(--mut);margin-top:8px">
+        For H08: Bearing Kit can arrive on <b>Flight HF-14 today 16:30</b> → Alba still meets weather window (~18 h). Estimated turbine back online 4–6 h after parts + arrival.
+      </p>
     </div>
   </div>
 
-  <!-- ========== TURBINE DETAIL ========== -->
+  <!-- DETAIL -->
   <div id="detail" class="section">
     <div class="card" id="d-H08" style="display:none">
-      <h2>H08 — <span class="badge RED">RED</span> &nbsp; 53.9300°N 1.6700°E</h2>
-      <p>High vibration + elevated gearbox temperature + oil debris – gearbox / bearing risk</p>
+      <h2>H08 — <span class="badge RED">RED</span> · 53.9300°N 1.6700°E</h2>
+      <p>High vibration + gearbox temp + oil debris</p>
       <div class="grid2">
         <div>
-          <strong>Component checklist</strong>
           <ul>
-            <li class="IMMEDIATE"><b>Vibration (RMS)</b> — 🚨 IMMEDIATE</li>
-            <li class="IMMEDIATE"><b>Gearbox Temperature</b> — 🚨 IMMEDIATE</li>
-            <li class="IMMEDIATE"><b>Oil Particle Count</b> — 🚨 IMMEDIATE</li>
-            <li class="CONCERN"><b>Main Bearing Temp</b> — ⚠️ CONCERN</li>
-            <li class="PASS"><b>Pitch Variance</b> — ✅ PASS</li>
-            <li class="PASS"><b>Generator Current</b> — ✅ PASS</li>
-            <li class="PASS"><b>Nacelle Temperature</b> — ✅ PASS</li>
-            <li class="CONCERN"><b>Power vs Expected</b> — ⚠️ CONCERN</li>
+            <li class="IMMEDIATE"><b>Vibration</b> — 🚨 IMMEDIATE</li>
+            <li class="IMMEDIATE"><b>Gearbox Temp</b> — 🚨 IMMEDIATE</li>
+            <li class="IMMEDIATE"><b>Oil Particles</b> — 🚨 IMMEDIATE</li>
+            <li class="CONCERN"><b>Bearing</b> — ⚠️ CONCERN</li>
           </ul>
         </div>
         <div>
-          <strong>Predictive & financial</strong><br>
-          RUL: <b>7 days</b><br>
-          7-day risk: <b>380 MWh</b> · <b>£28,500</b> · <b>152 tCO₂</b><br><br>
-          <strong>Vessel + weather</strong><br>
-          <b>ESVAGT Alba</b> · 2.1 km · weather-safe ETA <b>~6 min</b><br>
-          <span class="badge GREEN">Safe window ~18 h remaining</span><br>
-          Parts on board: Oil Filter, Gear Oil (Bearing Kit via transfer if needed)<br>
-          <b>Why not Froude?</b> Closer but missing Oil Filter + Bearing Kit + CTV weather marginal<br>
-          Estimated back online: <b>4–6 hours</b> after arrival<br><br>
-          Running hours: Oil 6,420 h (overdue) · Filter 2,100 h<br>
+          RUL 7d · 380 MWh · £28,500 · 152 tCO₂<br>
+          <b>Alba</b> · 2.1 km · ETA ~6 min · Window ~18 h<br>
+          Bearing Kit via <b>Flight HF-14 today 16:30</b> or Mistral transfer<br>
+          Why not Froude: missing parts + CTV weather<br>
+          Back online: <b>4–6 hours</b> after parts + arrival<br>
           <button class="btn" onclick="genWO('H08')">Generate Work Order</button>
         </div>
       </div>
     </div>
     <div class="card" id="d-H03" style="display:none">
-      <h2>H03 — <span class="badge AMBER">AMBER</span> &nbsp; 53.9400°N 1.6900°E</h2>
-      <p>Rising oil particles + pitch variance – early degradation</p>
+      <h2>H03 — <span class="badge AMBER">AMBER</span></h2>
       <div class="grid2">
-        <div>
-          <ul>
-            <li class="CONCERN"><b>Oil Particle Count</b> — ⚠️ CONCERN</li>
-            <li class="CONCERN"><b>Pitch Variance</b> — ⚠️ CONCERN</li>
-            <li class="PASS"><b>Vibration</b> — ✅ PASS</li>
-            <li class="PASS"><b>Gearbox Temp</b> — ✅ PASS</li>
-          </ul>
-        </div>
-        <div>
-          RUL 42 days · 95 MWh · £7,125 · 38 tCO₂<br>
-          Alba · 3.4 km · safe ETA ~9 min · <span class="badge GREEN">Safe ~18 h</span><br>
-          Can be grouped with H08 trip<br>
-          <button class="btn" onclick="genWO('H03')">Generate Work Order</button>
-        </div>
+        <div>Oil + pitch · RUL 42d · 95 MWh · £7,125</div>
+        <div>Alba · 3.4 km · ~9 min · group with H08<br><button class="btn" onclick="genWO('H03')">Generate Work Order</button></div>
       </div>
     </div>
     <div class="card" id="d-H11" style="display:none">
-      <h2>H11 — <span class="badge AMBER">AMBER</span> &nbsp; 53.9300°N 1.7300°E</h2>
+      <h2>H11 — <span class="badge AMBER">AMBER</span></h2>
       <div class="grid2">
-        <div>Oil + pitch variance · RUL 35 days · 80 MWh · £6,000 · 32 tCO₂</div>
-        <div>Havelok · 1.8 km · safe ETA ~5 min · <span class="badge GREEN">Safe ~30 h</span><br>
-        <button class="btn" onclick="genWO('H11')">Generate Work Order</button></div>
+        <div>Oil + pitch · RUL 35d · 80 MWh · £6,000</div>
+        <div>Havelok · 1.8 km · ~5 min<br><button class="btn" onclick="genWO('H11')">Generate Work Order</button></div>
       </div>
     </div>
-    <p style="color:var(--mut)" id="hint">Select a turbine from the Map, Status Board or Alerts. Full checklist detail shown for H08, H03 and H11.</p>
+    <p style="color:var(--mut)" id="hint">Select turbine from Map / Board / Alerts (full detail: H08, H03, H11).</p>
   </div>
 
-  <!-- ========== FORECAST ========== -->
+  <!-- FORECAST -->
   <div id="forecast" class="section">
     <div class="card">
       <h2>Performance & financial forecast</h2>
-      <p style="font-size:.85rem;color:var(--mut);margin-bottom:8px">Hover bars for issue details · Total risk: 555 MWh · £41,625 · 172 tCO₂</p>
-      <div class="bar-row"><span style="width:48px">H08</span><div class="bar" style="width:280px;background:var(--r)"></div><span>380 MWh · £28,500</span><div class="tip"><b>H08 RED</b><br>Gearbox / bearing risk<br>RUL 7d · Alba 2.1 km · safe ETA 6 min</div></div>
-      <div class="bar-row"><span style="width:48px">H03</span><div class="bar" style="width:70px;background:var(--a)"></div><span>95 MWh · £7,125</span><div class="tip"><b>H03 AMBER</b><br>Oil + pitch · RUL 42d · Alba 3.4 km</div></div>
-      <div class="bar-row"><span style="width:48px">H11</span><div class="bar" style="width:59px;background:var(--a)"></div><span>80 MWh · £6,000</span><div class="tip"><b>H11 AMBER</b><br>Oil + pitch · RUL 35d · Havelok 1.8 km</div></div>
-      <div class="bar-row"><span style="width:48px">Others</span><div class="bar" style="width:12px;background:var(--g)"></div><span>≤16 MWh each</span></div>
+      <p>Total risk: 555 MWh · £41,625 · 172 tCO₂</p>
+      <div style="margin:6px 0"><span style="display:inline-block;width:48px">H08</span><span class="bar" style="width:280px;background:var(--r)"></span> 380 MWh · £28,500</div>
+      <div style="margin:6px 0"><span style="display:inline-block;width:48px">H03</span><span class="bar" style="width:70px;background:var(--a)"></span> 95 MWh · £7,125</div>
+      <div style="margin:6px 0"><span style="display:inline-block;width:48px">H11</span><span class="bar" style="width:59px;background:var(--a)"></span> 80 MWh · £6,000</div>
     </div>
   </div>
 
-  <!-- ========== ALERTS ========== -->
+  <!-- ALERTS -->
   <div id="alerts" class="section">
     <div class="card">
-      <span class="badge RED">RED</span> <b>H08</b> — Gearbox / bearing risk<br>
+      <span class="badge RED">RED</span> <b>H08</b> — Gearbox / bearing<br>
       380 MWh · £28,500 · 152 tCO₂<br>
-      Assigned: ESVAGT Alba · 2.1 km · safe ETA <b>~6 min</b> · <span class="badge GREEN">Window ~18 h</span> · Parts on board<br>
-      <small>Froude closer but NOT sent: missing Oil Filter + Bearing Kit + CTV weather marginal</small><br>
+      Alba · ETA 6 min · Window 18 h · Bearing Kit on Flight HF-14 today 16:30<br>
+      <small>Froude closest but NOT sent: missing parts + CTV weather</small><br>
       <button class="btn" onclick="openT('H08')">Open Detail</button>
       <button class="btn btn-green" onclick="genWO('H08')">Generate Work Order</button>
     </div>
     <div class="card">
-      <span class="badge AMBER">AMBER</span> <b>H03</b> — Oil particles + pitch variance<br>
-      95 MWh · £7,125 · 38 tCO₂ · Alba 3.4 km · safe ETA ~9 min · can group with H08<br>
-      <button class="btn" onclick="openT('H03')">Open Detail</button>
-    </div>
-    <div class="card">
-      <span class="badge AMBER">AMBER</span> <b>H11</b> — Oil particles + pitch variance<br>
-      80 MWh · £6,000 · 32 tCO₂ · Havelok 1.8 km · safe ETA ~5 min · <span class="badge GREEN">Window ~30 h</span><br>
-      <button class="btn" onclick="openT('H11')">Open Detail</button>
+      <span class="badge AMBER">AMBER</span> <b>H03</b> · <b>H11</b><br>
+      <button class="btn" onclick="openT('H03')">H03</button>
+      <button class="btn" onclick="openT('H11')">H11</button>
     </div>
   </div>
 </div>
@@ -419,10 +370,9 @@ li.PASS{background:#14532d33} li.CONCERN{background:#78350f33} li.IMMEDIATE{back
 <div class="toast" id="toast"></div>
 <script>
 function show(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active')}
-function openT(id){show('detail',document.querySelectorAll('.nav button')[5]);document.querySelectorAll('#detail .card').forEach(c=>c.style.display='none');const el=document.getElementById('d-'+id);const hint=document.getElementById('hint');if(el){el.style.display='block';if(hint)hint.style.display='none';el.scrollIntoView({behavior:'smooth'})}else if(hint){hint.style.display='block';hint.textContent='Full checklist detail available for H08, H03 and H11. Other turbines are GREEN / normal.'}}
-function genWO(id){const t=document.getElementById('toast');t.innerHTML='Work Order generated for <b>'+id+'</b><br>Includes weather window, vessel, parts & safe ETA · Ready for SAP / Maximo';t.style.display='block';setTimeout(()=>t.style.display='none',4500)}
-function install(tid,name,pn){const t=document.getElementById('toast');t.innerHTML='<b>'+name+'</b> (PN '+pn+') marked INSTALLED on '+tid+'<br>→ PO created to replenish stock at site';t.style.display='block';if(event&&event.target){event.target.textContent='Installed – PO raised';event.target.disabled=true}setTimeout(()=>t.style.display='none',4500)}
+function openT(id){show('detail',document.querySelectorAll('.nav button')[5]);document.querySelectorAll('#detail .card').forEach(c=>c.style.display='none');const el=document.getElementById('d-'+id);const hint=document.getElementById('hint');if(el){el.style.display='block';if(hint)hint.style.display='none';el.scrollIntoView({behavior:'smooth'})}else if(hint){hint.style.display='block'}}
+function genWO(id){const t=document.getElementById('toast');t.innerHTML='Work Order generated for <b>'+id+'</b><br>Weather window, vessel, parts & flight included';t.style.display='block';setTimeout(()=>t.style.display='none',4500)}
+function install(tid,name,pn){const t=document.getElementById('toast');t.innerHTML='<b>'+name+'</b> (PN '+pn+') installed on '+tid+'<br>→ PO raised to replenish base stock';t.style.display='block';if(event&&event.target){event.target.textContent='Installed – PO raised';event.target.disabled=true}setTimeout(()=>t.style.display='none',4500)}
 </script>
 </body>
 </html>
-
